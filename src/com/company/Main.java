@@ -25,14 +25,19 @@ public class Main {
             player1.printPlayerInfo();
         }
 
-        System.out.println("Oh! It looks like you have no weapons. (Hit ENTER to continue)");
+        if(player1.weapon.currentWeapon.equalsIgnoreCase("none")) {
+            System.out.println("Oh! It looks like you have no weapons.");
+        } else {
+            System.out.println("Current weapon" + player1.weapon.currentWeapon);
+        }
         System.out.println("Opening shop... (Hit ENTER to continue)");
         user.nextLine();
         player1.weapon.showWeaponInfo();
 
-//        System.out.println("What would you like to buy? (Case sensitive)");
-//        String purchase = user.nextLine();
-//        player1.weapon.buyWeapon(player1.getGold(), purchase);
+        System.out.println("What would you like to buy? (Case sensitive)");
+        System.out.println("Current gold: " + player1.getGold());
+        String purchase = user.nextLine();
+        player1.buyWeapon(purchase);
 
     }
 }

@@ -10,10 +10,10 @@ public class Weapon {
     int upCost;
     boolean canShield;
 
-    //constructor: no default weapon
+    //--------------------- CONSTRUCTOR ------------------------
     public Weapon(){
-        currentWeapon = "dagger";
-        dmgDice = 4;
+        currentWeapon = "none";
+        dmgDice = 0;
         dmgTimes = 1;
         canShield = true;
 
@@ -23,6 +23,7 @@ public class Weapon {
         price.put("crossBow", 25);
         price.put("hammer", 10);
         price.put("axe", 5);
+        price.put("none", 0);
 
         upCost = price.get(currentWeapon) * dmgTimes;
     }
@@ -55,20 +56,32 @@ public class Weapon {
                 "\t * Use Shield: no \n");
     }
 
-    public void buyWeapon(int gold, String newWeapon) {
+    public int buyWeapon(int gold, String newWeapon) {
         switch (newWeapon) {
-            case "dagger": buyDagger(gold);
-            case "shortSword": buyShortSword(gold);
-            case "crossBow": buyCrossBow(gold);
-            case "hammer": buyHammer(gold);
-            case "axe": buyAxe(gold);
+            case "dagger":
+                buyDagger(gold);
+                break;
+            case "shortSword":
+                buyShortSword(gold);
+                break;
+            case "crossBow":
+                buyCrossBow(gold);
+                break;
+            case "hammer":
+                buyHammer(gold);
+                break;
+            case "axe":
+                buyAxe(gold);
+                break;
             default: System.out.println("That weapon is unavailable.");
         }
+
+        return price.get(newWeapon);
     }
 
     //always buy at base value then have to upgrade
     private void buyDagger(int gold){
-        if(currentWeapon.equals("none")){
+        if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else if(gold < price.get("dagger")) {
             System.out.println("Not enough gold.");
@@ -81,7 +94,7 @@ public class Weapon {
     }
 
     private void buyShortSword(int gold){
-        if(currentWeapon.equals("none")){
+        if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else if(gold < price.get("shortSword")) {
             System.out.println("Not enough gold.");
@@ -94,7 +107,7 @@ public class Weapon {
     }
 
     private void buyCrossBow(int gold){
-        if(currentWeapon.equals("none")){
+        if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else if(gold < price.get("crossBow")) {
             System.out.println("Not enough gold.");
@@ -107,7 +120,7 @@ public class Weapon {
     }
 
     private void buyHammer(int gold){
-        if(currentWeapon.equals("none")){
+        if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else if(gold < price.get("hammer")) {
             System.out.println("Not enough gold.");
@@ -120,7 +133,7 @@ public class Weapon {
     }
 
     private void buyAxe(int gold){
-        if(currentWeapon.equals("none")){
+        if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else if(gold < price.get("axe")) {
             System.out.println("Not enough gold.");

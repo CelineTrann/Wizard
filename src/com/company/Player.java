@@ -18,7 +18,7 @@ public class Player {
     public Weapon weapon = new Weapon();
 
     //store character stat values
-    private HashMap<String, Integer> stats = new HashMap<String, Integer>();
+    private HashMap<String, Integer> stats = new HashMap<>();
 
     //------------------- CONSTRUCTOR --------------------
     public Player(String newName, String newRace, int newLevel){
@@ -114,16 +114,20 @@ public class Player {
 
     //------------------- WEAPON METHODS --------------------
     //subtract gold when upgrading weapon
-    public void upgradeWeapon() {
-        gold -= weapon.upgrade(gold);
+    public void upgradeWeapon() { setGold(true, weapon.upgrade(gold)); }
+
+    public void buyWeapon(String newWeapon) {
+        setGold(true, weapon.buyWeapon(gold, newWeapon));
     }
+
+    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
 
 
     //------------------- GENERAL METHODS --------------------
     //print player info
     public void printPlayerInfo(){
         System.out.println("---------------------------------");
-        System.out.println("Name: " + name + "(" + race + ", lvl. " + level + ")");
+        System.out.println("Name: " + name + " (" + race + ", lv. " + level + ")");
         System.out.println("HP: " + hp);
         System.out.println("AC: " + ac);
         System.out.println();
