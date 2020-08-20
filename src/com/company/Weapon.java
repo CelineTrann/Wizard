@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.HashMap;
 
-public class Weapon {
+public class Weapon extends BaseMech {
     String currentWeapon;
     HashMap<String, Integer> price = new HashMap<>();
     int dmgDice;
@@ -26,6 +26,11 @@ public class Weapon {
         price.put("none", 0);
 
         upCost = price.get(currentWeapon) * dmgTimes;
+    }
+
+    //--------------------- ACCESSORS ------------------------
+    public int getDamage(){
+        return 0;
     }
 
     //--------------------- BUY ------------------------
