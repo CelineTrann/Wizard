@@ -30,7 +30,7 @@ public class Weapon extends BaseMech {
 
     //--------------------- ACCESSORS ------------------------
     public int getDamage(){
-        return 0;
+        return rollDice(dmgTimes, dmgDice);
     }
 
     //--------------------- BUY ------------------------
