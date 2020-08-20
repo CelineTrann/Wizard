@@ -15,7 +15,7 @@ public class Main {
         String race = user.nextLine();
 
         System.out.println("Well that's great! Now, what class do you want to play?");
-        String playerClass = user.nextLine();
+        user.nextLine();
 
         System.out.println("Whoops. There seems to be a problem. The only class available is 'Wizard' :(");
         Player player1 = new Player(name, race, 1);
@@ -38,6 +38,11 @@ public class Main {
         System.out.println("Current gold: " + player1.getGold());
         String purchase = user.nextLine();
         player1.buyWeapon(purchase);
+
+        System.out.println("Would you like to upgrade your weapon? (y/n)");
+        if(user.nextLine().equalsIgnoreCase("y")){
+            player1.weapon.showUpgradeWeapon();
+        }
 
     }
 }

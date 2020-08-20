@@ -95,6 +95,7 @@ public class Weapon extends BaseMech {
             dmgDice = 4;
             dmgTimes = 1;
             canShield = true;
+            upCost = price.get("dagger") * dmgTimes;
         }
     }
 
@@ -108,6 +109,7 @@ public class Weapon extends BaseMech {
             dmgDice = 6;
             dmgTimes = 1;
             canShield = true;
+            upCost = price.get("shortSword") * dmgTimes;
         }
     }
 
@@ -121,6 +123,7 @@ public class Weapon extends BaseMech {
             dmgDice = 8;
             dmgTimes = 2;
             canShield = false;
+            upCost = price.get("crossBow") * dmgTimes;
         }
     }
 
@@ -134,6 +137,7 @@ public class Weapon extends BaseMech {
             dmgDice = 8;
             dmgTimes = 1;
             canShield = false;
+            upCost = price.get("hammer") * dmgTimes;
         }
     }
 
@@ -147,6 +151,7 @@ public class Weapon extends BaseMech {
             dmgDice = 6;
             dmgTimes = 2;
             canShield = false;
+            upCost = price.get("axe") * dmgTimes;
         }
     }
 
