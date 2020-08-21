@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner user = new Scanner(System.in);
 
+        //--------------------- CREATE CHARACTER ------------------------
         System.out.println("Hello! Welcome to your new adventure. What is your name?");
         String name = user.nextLine();
 
@@ -17,24 +19,48 @@ public class Main {
 
         viewStats(user, player1);
 
-        if(player1.weapon.currentWeapon.equalsIgnoreCase("none")) {
-            System.out.println("Oh! It looks like you have no weapons.");
-        } else {
-            System.out.println("Current weapon" + player1.weapon.currentWeapon);
+        //--------------------- SHOPPING TUT. ------------------------
+        System.out.println("Let me teach you about the store. It can be found at the Adventure guild. \n" +
+                "There you can buy, sell and upgrade weapons. Remember you can only carry one (1) weapon at a time. \n" +
+                "So be sure to sell your weapon before you buy another one.");
+
+        System.out.println("Type 'guild' to access the guild!");
+        while(!user.nextLine().equalsIgnoreCase("guild")){
+            System.out.println("try again!");
         }
 
-        //buy weapon
-        buyWeapon(user, player1);
+        do{
+            showGuild();
+        } while (guildChoice(user, player1));
 
-        //upgrade weapon
-        upgradeWeapon(user, player1);
+        System.out.println("Thanks for playing!");
 
-        System.out.println("Add gold and buy (y/n)");
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.setGold(false, 5);
+    }
 
+    public static void showGuild(){
+        System.out.println("\nWeapons");
+        System.out.println("\t 1. buy \n" +
+                "\t 2. sell \n" +
+                "\t 3. upgrade \n" +
+                "\t 4. exit");
+    }
+
+    public static boolean guildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "buy":
+                buyWeapon(user, player1);
+                break;
+            case "sell":
+                break;
+            case "upgrade":
+                upgradeWeapon(user, player1);
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid input");
         }
-
+        return true;
     }
 
     public static void buyWeapon(Scanner user, Player player1){
@@ -42,19 +68,20 @@ public class Main {
         user.nextLine();
         player1.weapon.showWeaponInfo();
 
-        System.out.println("What would you like to buy? (Case sensitive)");
+        System.out.println("\nWhat would you like to buy? (Case sensitive)");
         System.out.println("Current gold: " + player1.getGold());
         String purchase = user.nextLine();
         player1.buyWeapon(purchase);
     }
 
     public static void upgradeWeapon(Scanner user, Player player1){
-        System.out.println("Upgrade Weapon");
         player1.weapon.showUpgradeWeapon();
         System.out.println("Would you like to upgrade your weapon? (y/n)");
 
         if(user.nextLine().equalsIgnoreCase("y")){
             player1.upgradeWeapon();
+        } else {
+            System.out.println("Exiting upgrade screen.");
         }
     }
 

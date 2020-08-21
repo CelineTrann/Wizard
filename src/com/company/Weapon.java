@@ -61,6 +61,7 @@ public class Weapon extends BaseMech {
                 "\t * Cost: 5gp \n" +
                 "\t * dmg Dice: 1d6 \n" +
                 "\t * Use Shield: no \n");
+        System.out.println("exit");
     }
 
     public int buyWeapon(int gold, String newWeapon) {
@@ -80,6 +81,8 @@ public class Weapon extends BaseMech {
             case "axe":
                 buyAxe(gold);
                 break;
+            case "exit":
+                return -1;
             default: System.out.println("That weapon is unavailable.");
         }
 
@@ -90,8 +93,10 @@ public class Weapon extends BaseMech {
     private void buyDagger(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+
         } else if(gold < price.get("dagger")) {
             System.out.println("Not enough gold.");
+
         } else {
             currentWeapon = "dagger";
             dmgDice = 4;
@@ -99,14 +104,17 @@ public class Weapon extends BaseMech {
             canShield = true;
             value = price.get("dagger");
             upCost = price.get("dagger") * dmgTimes;
+            System.out.println("Transaction complete.");
         }
     }
 
     private void buyShortSword(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+
         } else if(gold < price.get("shortSword")) {
             System.out.println("Not enough gold.");
+
         } else {
             currentWeapon = "shortSword";
             dmgDice = 6;
@@ -114,14 +122,17 @@ public class Weapon extends BaseMech {
             canShield = true;
             value = price.get("shortSword");
             upCost = price.get("shortSword") * dmgTimes;
+            System.out.println("Transaction complete.");
         }
     }
 
     private void buyCrossBow(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+
         } else if(gold < price.get("crossBow")) {
             System.out.println("Not enough gold.");
+
         } else {
             currentWeapon = "crossBow";
             dmgDice = 8;
@@ -129,14 +140,17 @@ public class Weapon extends BaseMech {
             canShield = false;
             value = price.get("crossBow");
             upCost = price.get("crossBow") * dmgTimes;
+            System.out.println("Transaction complete.");
         }
     }
 
     private void buyHammer(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+
         } else if(gold < price.get("hammer")) {
             System.out.println("Not enough gold.");
+
         } else {
             currentWeapon = "hammer";
             dmgDice = 8;
@@ -144,14 +158,17 @@ public class Weapon extends BaseMech {
             canShield = false;
             value = price.get("hammer");
             upCost = price.get("hammer") * dmgTimes;
+            System.out.println("Transaction complete.");
         }
     }
 
     private void buyAxe(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+
         } else if(gold < price.get("axe")) {
             System.out.println("Not enough gold.");
+
         } else {
             currentWeapon = "axe";
             dmgDice = 6;
@@ -159,6 +176,7 @@ public class Weapon extends BaseMech {
             canShield = false;
             value = price.get("axe");
             upCost = price.get("axe") * dmgTimes;
+            System.out.println("Transaction complete.");
         }
     }
 
@@ -193,9 +211,13 @@ public class Weapon extends BaseMech {
     }
 
     public void showUpgradeWeapon() {
-        System.out.println("Weapon: " + currentWeapon);
-        System.out.println("\t Upgrade cost: " + upCost + "gp");
-        System.out.println("\t New Dmg Dice: " + (dmgTimes + 1) + "d" + dmgDice);
+        if(currentWeapon.equals("none")){
+            System.out.println("You have no weapons.");
+        } else {
+            System.out.println("Weapon: " + currentWeapon);
+            System.out.println("\t Upgrade cost: " + upCost + "gp");
+            System.out.println("\t New Dmg Dice: " + (dmgTimes + 1) + "d" + dmgDice);
+        }
     }
 
 }
