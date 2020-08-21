@@ -2,7 +2,6 @@ package com.company;
 
 
 import java.util.HashMap;
-import java.util.Random;
 
 public class Player extends BaseMech {
 
@@ -134,7 +133,7 @@ public class Player extends BaseMech {
         System.out.println();
 
         for (String s : stats.keySet()) {
-            System.out.println( s + ": " + stats.get(s));
+            System.out.println( s.toUpperCase() + ": " + stats.get(s) + "\t (" + getStatMod(s) + ")");
         }
         System.out.println("---------------------------------");
     }
