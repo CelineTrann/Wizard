@@ -65,32 +65,38 @@ public class Weapon extends BaseMech {
     }
 
     public int buyWeapon(int gold, String newWeapon) {
+        boolean completeTrans = false;
+
         switch (newWeapon) {
             case "dagger":
-                buyDagger(gold);
+                completeTrans = buyDagger(gold);
                 break;
             case "shortSword":
-                buyShortSword(gold);
+                completeTrans = buyShortSword(gold);
                 break;
             case "crossBow":
-                buyCrossBow(gold);
+                completeTrans = buyCrossBow(gold);
                 break;
             case "hammer":
-                buyHammer(gold);
+                completeTrans = buyHammer(gold);
                 break;
             case "axe":
-                buyAxe(gold);
+                completeTrans = buyAxe(gold);
                 break;
             case "exit":
-                return -1;
-            default: System.out.println("That weapon is unavailable.");
+                break;
+            default:
+                System.out.println("That weapon is unavailable.");
         }
 
-        return price.get(newWeapon);
+        if(completeTrans){
+            return price.get(newWeapon);
+        }
+        return 0;
     }
 
     //always buy at base value then have to upgrade
-    private void buyDagger(int gold){
+    private boolean buyDagger(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
 
@@ -105,10 +111,12 @@ public class Weapon extends BaseMech {
             value = price.get("dagger");
             upCost = price.get("dagger") * dmgTimes;
             System.out.println("Transaction complete.");
+            return true;
         }
+        return false;
     }
 
-    private void buyShortSword(int gold){
+    private boolean buyShortSword(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
 
@@ -123,10 +131,12 @@ public class Weapon extends BaseMech {
             value = price.get("shortSword");
             upCost = price.get("shortSword") * dmgTimes;
             System.out.println("Transaction complete.");
+            return true;
         }
+        return false;
     }
 
-    private void buyCrossBow(int gold){
+    private boolean buyCrossBow(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
 
@@ -141,10 +151,12 @@ public class Weapon extends BaseMech {
             value = price.get("crossBow");
             upCost = price.get("crossBow") * dmgTimes;
             System.out.println("Transaction complete.");
+            return true;
         }
+        return false;
     }
 
-    private void buyHammer(int gold){
+    private boolean buyHammer(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
 
@@ -159,10 +171,12 @@ public class Weapon extends BaseMech {
             value = price.get("hammer");
             upCost = price.get("hammer") * dmgTimes;
             System.out.println("Transaction complete.");
+            return true;
         }
+        return false;
     }
 
-    private void buyAxe(int gold){
+    private boolean buyAxe(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
 
@@ -177,18 +191,19 @@ public class Weapon extends BaseMech {
             value = price.get("axe");
             upCost = price.get("axe") * dmgTimes;
             System.out.println("Transaction complete.");
+            return true;
         }
+        return false;
     }
 
     //--------------------- SELL ------------------------
     public int sellWeapon(){
-        String soldWeapon = currentWeapon;
         currentWeapon = "none";
         dmgDice = 0;
         dmgTimes = 0;
         canShield = true;
 
-        System.out.println(currentWeapon + " was sold for " + value);
+        System.out.println(currentWeapon + " was sold for " + value + "gp");
         return value;
     }
 
@@ -197,7 +212,7 @@ public class Weapon extends BaseMech {
             System.out.println("You have no weapon.");
         } else {
             System.out.println("Weapon: " + currentWeapon);
-            System.out.println("Price: " + value);
+            System.out.println("Price: " + value + "gp");
         }
     }
 
