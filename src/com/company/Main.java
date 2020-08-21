@@ -22,7 +22,7 @@ public class Main {
         //--------------------- SHOPPING TUT. ------------------------
         System.out.println("Let me teach you about the store. It can be found at the Adventure guild. \n" +
                 "There you can buy, sell and upgrade weapons. Remember you can only carry one (1) weapon at a time. \n" +
-                "So be sure to sell your weapon before you buy another one.");
+                "So be sure to sell your weapon before you buy another one. \n");
 
         System.out.println("Type 'guild' to access the guild!");
         while(!user.nextLine().equalsIgnoreCase("guild")){
@@ -30,15 +30,17 @@ public class Main {
         }
 
         do{
-            showGuild();
+            showGuild(player1);
         } while (guildChoice(user, player1));
 
         System.out.println("Thanks for playing!");
 
     }
 
-    public static void showGuild(){
-        System.out.println("\nWeapons");
+    //------------------- GUILD METHODS --------------------
+    // Currently only supporting weapons
+    public static void showGuild(Player player1){
+        System.out.println("\nWeapons (" + player1.getGold() + "gp)");
         System.out.println("\t 1. buy \n" +
                 "\t 2. sell \n" +
                 "\t 3. upgrade \n" +
@@ -51,6 +53,7 @@ public class Main {
                 buyWeapon(user, player1);
                 break;
             case "sell":
+                sellWeapon(user, player1);
                 break;
             case "upgrade":
                 upgradeWeapon(user, player1);
@@ -74,6 +77,17 @@ public class Main {
         player1.buyWeapon(purchase);
     }
 
+    public static void sellWeapon(Scanner user, Player player1){
+        player1.weapon.showSellWeapon();
+        System.out.println("Would you like to sell your weapon? (y/n)");
+
+        if(user.nextLine().equalsIgnoreCase("y")){
+            player1.sellWeapon();
+        } else {
+            System.out.println("Exiting upgrade screen.");
+        }
+    }
+
     public static void upgradeWeapon(Scanner user, Player player1){
         player1.weapon.showUpgradeWeapon();
         System.out.println("Would you like to upgrade your weapon? (y/n)");
@@ -85,6 +99,7 @@ public class Main {
         }
     }
 
+    //------------------- PLAYER METHODS --------------------
     public static void viewStats(Scanner user, Player player1) {
         System.out.println("Would you like to see your overall stats? (y/n)");
         if(user.nextLine().equalsIgnoreCase("y")){

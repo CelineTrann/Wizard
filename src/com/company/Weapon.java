@@ -192,6 +192,15 @@ public class Weapon extends BaseMech {
         return value;
     }
 
+    public void showSellWeapon() {
+        if(currentWeapon.equals("none")){
+            System.out.println("You have no weapon.");
+        } else {
+            System.out.println("Weapon: " + currentWeapon);
+            System.out.println("Price: " + value);
+        }
+    }
+
     //--------------------- UPGRADE ------------------------
     public int upgrade(int gold) {
         if(currentWeapon.equals("none")){
@@ -212,7 +221,7 @@ public class Weapon extends BaseMech {
 
     public void showUpgradeWeapon() {
         if(currentWeapon.equals("none")){
-            System.out.println("You have no weapons.");
+            System.out.println("You have no weapon.");
         } else {
             System.out.println("Weapon: " + currentWeapon);
             System.out.println("\t Upgrade cost: " + upCost + "gp");

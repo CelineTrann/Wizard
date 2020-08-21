@@ -26,7 +26,7 @@ public class Player extends BaseMech {
         name = newName;
         race = newRace;
         level = newLevel;
-        gold = 2;
+        gold = 15;
         exp = 0;
 
         createStats();
