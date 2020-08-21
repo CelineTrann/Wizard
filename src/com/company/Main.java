@@ -16,6 +16,16 @@ public class Main {
         player1.buyWeapon(purchase);
     }
 
+    public static void upgradeWeapon(Scanner user, Player player1){
+        System.out.println("Upgrade Weapon");
+        player1.weapon.showUpgradeWeapon();
+        System.out.println("Would you like to upgrade your weapon? (y/n)");
+
+        if(user.nextLine().equalsIgnoreCase("y")){
+            player1.upgradeWeapon();
+        }
+    }
+
     public static void main(String[] args) {
         Scanner user = new Scanner(System.in);
 
@@ -45,10 +55,7 @@ public class Main {
         //buy weapon
         buyWeapon(user, player1);
 
-        System.out.println("Would you like to upgrade your weapon? (y/n)");
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.weapon.showUpgradeWeapon();
-        }
+        upgradeWeapon(user, player1);
 
         System.out.println("Add gold and buy (y/n)");
         if(user.nextLine().equalsIgnoreCase("y")){
