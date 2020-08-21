@@ -8,7 +8,7 @@ public class Player extends BaseMech {
 
     //------------------- ATTRIBUTES --------------------
     private String name;
-    private String race;
+    private final String race;
     private int hp;
     private int ac;
     private int level;
@@ -21,6 +21,7 @@ public class Player extends BaseMech {
     private HashMap<String, Integer> stats = new HashMap<>();
 
     //------------------- CONSTRUCTOR --------------------
+    //TODO let players change name?
     public Player(String newName, String newRace, int newLevel){
         name = newName;
         race = newRace;
@@ -94,7 +95,7 @@ public class Player extends BaseMech {
 
     //------------------- MODIFIERS --------------------
     //create hp: current only calculate wizards
-    //upgrade: add hit dice variable to make more generic?
+    //TODO add hit dice variable to make more generic?
     public void setHp(int level){
         if(level == 1){
             hp = 6 + getStatMod("con");
