@@ -7,6 +7,8 @@ public class Player extends BaseMech {
     //------------------- ATTRIBUTES --------------------
     private String name;
     private final String race;
+    private int maxHp;
+    private int maxAc;
     private int hp;
     private int ac;
     private int level;
@@ -32,7 +34,8 @@ public class Player extends BaseMech {
 
         createStats();
         setHp(level);
-        ac = 10 + getStatMod("dex");
+        maxAc = 10 + getStatMod("dex");
+        ac = maxAc;
     }
 
     //randomly roll stats based on 3d6
@@ -48,8 +51,10 @@ public class Player extends BaseMech {
     //------------------- ACCESSORS --------------------
     public int getLevel(){ return level; }
 
+    //get current ac
     public int getAc() { return ac; }
 
+    //get current hp
     public int getHp() { return hp; }
 
     public int getGold(){ return gold; }
@@ -99,11 +104,11 @@ public class Player extends BaseMech {
     //TODO add hit dice variable to make more generic?
     public void setHp(int level){
         if(level == 1){
-            hp = 6 + getStatMod("con");
-
+            maxHp = 6 + getStatMod("con");
         } else {
-            hp += rollDice(1, 6) + getStatMod("con");
+            maxHp += rollDice(1, 6) + getStatMod("con");
         }
+        hp = maxHp;
     }
 
     public void setGold(boolean buy, int cost){
@@ -126,7 +131,6 @@ public class Player extends BaseMech {
 
     public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
 
-
     //------------------- GENERAL METHODS --------------------
     //TODO print out level up message if return true.
     //gain gp when level up?
@@ -140,6 +144,20 @@ public class Player extends BaseMech {
         return false;
     }
 
+    //return true if dead
+    public boolean takeDmg(int dmg){
+        hp -= dmg;
+        return hp <= 0;
+    }
+
+    public boolean heal(int heal){
+        if(hp == maxHp){
+            return false;   //cannot heal anymore
+        } else {
+            hp += heal;
+            return true;
+        }
+    }
 
     //print player info
     public void printPlayerInfo(){
