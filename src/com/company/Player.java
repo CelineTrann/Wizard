@@ -13,10 +13,13 @@ public class Player extends BaseMech {
     private int exp;
     private int gold;
 
-    public Weapon weapon = new Weapon();
-
     //store character stat values
     private HashMap<String, Integer> stats = new HashMap<>();
+    public Weapon weapon = new Weapon();
+
+    //exp need to level to next level
+    int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
+
 
     //------------------- CONSTRUCTOR --------------------
     //TODO let players change name?
@@ -111,6 +114,8 @@ public class Player extends BaseMech {
         }
     }
 
+    public void setExp(int newExp){ exp += newExp; }
+
     //------------------- WEAPON METHODS --------------------
     //subtract gold when upgrading weapon
     public void upgradeWeapon() { setGold(true, weapon.upgrade(gold)); }
@@ -123,6 +128,19 @@ public class Player extends BaseMech {
 
 
     //------------------- GENERAL METHODS --------------------
+    //TODO print out level up message if return true.
+    //gain gp when level up?
+    public boolean levelUp(){
+        if(exp >= lvUp[level]){
+            exp = 0;
+            level++;
+            setHp(level);
+            return true;
+        }
+        return false;
+    }
+
+
     //print player info
     public void printPlayerInfo(){
         System.out.println("---------------------------------");
