@@ -78,14 +78,17 @@ public class Main {
     }
 
     public static void sellWeapon(Scanner user, Player player1){
-        player1.weapon.showSellWeapon();
-        System.out.println("Would you like to sell your weapon? (y/n)");
+        if(player1.weapon.showSellWeapon()){
+            System.out.println("Would you like to sell your weapon? (y/n)");
 
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.sellWeapon();
+            if(user.nextLine().equalsIgnoreCase("y")){
+                player1.sellWeapon();
+            }
         } else {
-            System.out.println("Exiting upgrade screen.");
+            System.out.println("You have no weapon to sell.");
         }
+        System.out.println("Exiting upgrade screen.");
+
     }
 
     public static void upgradeWeapon(Scanner user, Player player1){

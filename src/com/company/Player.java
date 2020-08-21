@@ -26,7 +26,7 @@ public class Player extends BaseMech {
         name = newName;
         race = newRace;
         level = newLevel;
-        gold = 15;
+        gold = 15;  //TODO default value should be 2gp for game
         exp = 0;
 
         createStats();
@@ -118,7 +118,6 @@ public class Player extends BaseMech {
     public void upgradeWeapon() { setGold(true, weapon.upgrade(gold)); }
 
     public void buyWeapon(String newWeapon) {
-
         setGold(true, weapon.buyWeapon(gold, newWeapon));
     }
 

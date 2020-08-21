@@ -203,16 +203,16 @@ public class Weapon extends BaseMech {
         dmgTimes = 0;
         canShield = true;
 
-        System.out.println(currentWeapon + " was sold for " + value + "gp");
         return value;
     }
 
-    public void showSellWeapon() {
+    public boolean showSellWeapon() {
         if(currentWeapon.equals("none")){
-            System.out.println("You have no weapon.");
+            return false;
         } else {
             System.out.println("Weapon: " + currentWeapon);
             System.out.println("Price: " + value + "gp");
+            return true;
         }
     }
 
