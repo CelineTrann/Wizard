@@ -35,6 +35,10 @@ public class Weapon extends BaseMech {
         return rollDice(dmgTimes, dmgDice);
     }
 
+    public String getCurrentWeapon(){
+        return currentWeapon;
+    }
+
     //--------------------- BUY ------------------------
     public void showWeaponInfo(){
         System.out.print("1. dagger \n" +

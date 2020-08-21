@@ -67,14 +67,19 @@ public class Main {
     }
 
     public static void buyWeapon(Scanner user, Player player1){
-        System.out.println("Opening shop... (Hit ENTER to continue)");
-        user.nextLine();
-        player1.weapon.showWeaponInfo();
+        if(!player1.weapon.getCurrentWeapon().equals("none")) {
+            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+        } else {
+            System.out.println("Opening shop... (Hit ENTER to continue)");
+            user.nextLine();
+            player1.weapon.showWeaponInfo();
 
-        System.out.println("\nWhat would you like to buy? (Case sensitive)");
-        System.out.println("Current gold: " + player1.getGold());
-        String purchase = user.nextLine();
-        player1.buyWeapon(purchase);
+            System.out.println("\nWhat would you like to buy? (Case sensitive)");
+            System.out.println("Current gold: " + player1.getGold());
+            String purchase = user.nextLine();
+            player1.buyWeapon(purchase);
+        }
+
     }
 
     public static void sellWeapon(Scanner user, Player player1){
