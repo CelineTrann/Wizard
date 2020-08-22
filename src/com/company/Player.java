@@ -134,8 +134,15 @@ public class Player extends BaseMech {
     }
 
     //------------------- WEAPON METHODS --------------------
-    //subtract gold when upgrading weapon
-    public void upgradeWeapon() { setGold(true, weapon.upgrade(gold)); }
+    //subtract gold when upgrading weapon, return true if complete
+    public boolean upgradeWeapon() {
+        int cost = weapon.upgrade(gold);
+        if(cost > 0){
+            setGold(true, cost);
+            return true;
+        }
+        return false;
+    }
 
     public void buyWeapon(String newWeapon) {
         setGold(true, weapon.buyWeapon(gold, newWeapon));

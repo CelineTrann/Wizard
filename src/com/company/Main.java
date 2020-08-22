@@ -98,6 +98,8 @@ public class Main {
 
     public static void sellWeapon(Scanner user, Player player1){
         if(player1.weapon.showSellWeapon()){
+            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
+            System.out.println("Price: " + player1.weapon.getValue() + "gp");
             System.out.println("Would you like to sell your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
@@ -110,14 +112,30 @@ public class Main {
 
     }
 
-    public static void upgradeWeapon(Scanner user, Player player1){
-        player1.weapon.showUpgradeWeapon();
-        System.out.println("Would you like to upgrade your weapon? (y/n)");
-
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.upgradeWeapon();
+    public static boolean showUpgradeWeapon(Player player1) {
+        if(player1.weapon.getCurrentWeapon().equals("none")){
+            System.out.println("You have no weapon.");
+            return false;
         } else {
-            System.out.println("Exiting upgrade screen.");
+            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
+            System.out.println("\t Upgrade cost: " + player1.weapon.getUpCost() + "gp");
+            System.out.println("\t New Dmg Dice: " + (player1.weapon.getDmgTimes() + 1)
+                    + "d" + player1.weapon.getDmgDice());
+            return true;
+        }
+    }
+
+    public static void upgradeWeapon(Scanner user, Player player1){
+        if(showUpgradeWeapon(player1)){
+            System.out.println("Would you like to upgrade your weapon? (y/n)");
+
+            if(user.nextLine().equalsIgnoreCase("y")){
+                if(player1.upgradeWeapon()){
+                    System.out.println("Upgrade Complete \n");
+                } else {
+                    System.out.println("You don't have enough gold.");
+                }
+            }
         }
     }
 

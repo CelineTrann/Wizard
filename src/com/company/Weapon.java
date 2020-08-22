@@ -39,6 +39,10 @@ public class Weapon extends BaseMech {
 
     public int getDmgTimes(){ return dmgTimes; }
 
+    public int getValue(){ return value; }
+
+    public int getUpCost(){ return upCost; }
+
     //--------------------- BUY ------------------------
     public void showWeaponInfo(){
         System.out.print("1. dagger \n" +
@@ -103,9 +107,11 @@ public class Weapon extends BaseMech {
     private boolean buyDagger(int gold){
         if(!currentWeapon.equals("none")){
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
+            return false;
 
         } else if(gold < price.get("dagger")) {
             System.out.println("Not enough gold.");
+            return false;
 
         } else {
             currentWeapon = "dagger";
@@ -117,7 +123,6 @@ public class Weapon extends BaseMech {
             System.out.println("Transaction complete.");
             return true;
         }
-        return false;
     }
 
     private boolean buyShortSword(int gold){
@@ -211,40 +216,23 @@ public class Weapon extends BaseMech {
     }
 
     public boolean showSellWeapon() {
-        if(currentWeapon.equals("none")){
-            return false;
-        } else {
-            System.out.println("Weapon: " + currentWeapon);
-            System.out.println("Price: " + value + "gp");
-            return true;
-        }
+        return !currentWeapon.equals("none");
     }
 
     //--------------------- UPGRADE ------------------------
     public int upgrade(int gold) {
         if(currentWeapon.equals("none")){
-            System.out.println("You have no weapon.");
             return 0;
 
         } else if (gold < upCost){
-            System.out.println("Not enough gold to upgrade");
             return 0;
 
         } else {
+            value += upCost;
+            int tempCost = upCost;
             dmgTimes++;
             upCost = price.get(currentWeapon) * dmgTimes;
-            value += upCost;
-            return upCost;
-        }
-    }
-
-    public void showUpgradeWeapon() {
-        if(currentWeapon.equals("none")){
-            System.out.println("You have no weapon.");
-        } else {
-            System.out.println("Weapon: " + currentWeapon);
-            System.out.println("\t Upgrade cost: " + upCost + "gp");
-            System.out.println("\t New Dmg Dice: " + (dmgTimes + 1) + "d" + dmgDice);
+            return tempCost;
         }
     }
 
