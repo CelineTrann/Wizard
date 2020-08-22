@@ -43,36 +43,24 @@ public class Weapon extends BaseMech {
 
     public int getUpCost(){ return upCost; }
 
-    //--------------------- BUY ------------------------
-    public int buyWeapon(int gold, String newWeapon) {
-        boolean completeTrans = false;
 
+    //--------------------- BUY ------------------------
+    //return true if transaction is complete
+    public boolean buyWeapon(int gold, String newWeapon) {
         switch (newWeapon) {
             case "dagger":
-                completeTrans = buyDagger(gold);
-                break;
+                return buyDagger(gold);
             case "shortSword":
-                completeTrans = buyShortSword(gold);
-                break;
+                return buyShortSword(gold);
             case "crossBow":
-                completeTrans = buyCrossBow(gold);
-                break;
+                return buyCrossBow(gold);
             case "hammer":
-                completeTrans = buyHammer(gold);
-                break;
+                return buyHammer(gold);
             case "axe":
-                completeTrans = buyAxe(gold);
-                break;
-            case "exit":
-                break;
+                return buyAxe(gold);
             default:
-                System.out.println("That weapon is unavailable.");
+                return false;
         }
-
-        if(completeTrans){
-            return price.get(newWeapon);
-        }
-        return 0;
     }
 
     //always buy at base value then have to upgrade

@@ -145,7 +145,9 @@ public class Player extends BaseMech {
     }
 
     public void buyWeapon(String newWeapon) {
-        setGold(true, weapon.buyWeapon(gold, newWeapon));
+        if(weapon.buyWeapon(gold, newWeapon)) {
+            setGold(true, weapon.getValue());
+        }
     }
 
     public void sellWeapon() { setGold(false, weapon.sellWeapon()); }

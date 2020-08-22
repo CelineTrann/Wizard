@@ -105,7 +105,7 @@ public class Main {
                 "\t * Cost: 5gp \n" +
                 "\t * dmg Dice: 1d6 \n" +
                 "\t * Use Shield: no \n");
-        System.out.println("exit");
+        System.out.println("5. exit");
     }
 
     public static void buyWeapon(Scanner user, Player player1){
@@ -118,8 +118,7 @@ public class Main {
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
             System.out.println("Current gold: " + player1.getGold());
-            String purchase = user.nextLine();
-            player1.buyWeapon(purchase);
+            player1.buyWeapon(user.nextLine());
         }
 
     }
