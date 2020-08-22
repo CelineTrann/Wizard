@@ -47,15 +47,6 @@ public class Weapon extends BaseMech {
 
 
     //--------------------- BUY ------------------------
-    public int arrPrice(String weapon){
-        int index = findIndex(weaponNames, weapon);
-        return weaponInfo[index][0];
-    }
-
-    public int calcUpCost(){
-        return value * dmgTimes;
-    }
-
     public boolean buyWpn(int gold, String newWeapon){
         int weaponIndex = findIndex(weaponNames, newWeapon);
 
@@ -73,6 +64,16 @@ public class Weapon extends BaseMech {
             return true;
         }
     }
+
+    public int arrPrice(String weapon){
+        int index = findIndex(weaponNames, weapon);
+        return weaponInfo[index][0];
+    }
+
+    public int calcUpCost(){
+        return value * dmgTimes;
+    }
+
 
     //--------------------- SELL ------------------------
     public int sellWeapon(){
