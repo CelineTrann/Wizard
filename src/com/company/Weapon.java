@@ -44,34 +44,6 @@ public class Weapon extends BaseMech {
     public int getUpCost(){ return upCost; }
 
     //--------------------- BUY ------------------------
-    public void showWeaponInfo(){
-        System.out.print("1. dagger \n" +
-                "\t * Cost: 2gp \n" +
-                "\t * dmg Dice: 1d4 \n" +
-                "\t * Use Shield: yes \n");
-
-        System.out.print("2. shortSword \n" +
-                "\t * Cost: 5gp \n" +
-                "\t * dmg Dice: 1d6 \n" +
-                "\t * Use Shield: yes \n");
-
-        System.out.print("3. crossBow \n" +
-                "\t * Cost: 25gp \n" +
-                "\t * dmg Dice: 2d8 \n" +
-                "\t * Use Shield: no \n");
-
-        System.out.print("4. hammer \n" +
-                "\t * Cost: 10gp \n" +
-                "\t * dmg Dice: 1d8 \n" +
-                "\t * Use Shield: no \n");
-
-        System.out.print("5. axe \n" +
-                "\t * Cost: 5gp \n" +
-                "\t * dmg Dice: 1d6 \n" +
-                "\t * Use Shield: no \n");
-        System.out.println("exit");
-    }
-
     public int buyWeapon(int gold, String newWeapon) {
         boolean completeTrans = false;
 

@@ -80,13 +80,41 @@ public class Main {
         return true;
     }
 
+    public static void showWeaponInfo(){
+        System.out.print("1. dagger \n" +
+                "\t * Cost: 2gp \n" +
+                "\t * dmg Dice: 1d4 \n" +
+                "\t * Use Shield: yes \n");
+
+        System.out.print("2. shortSword \n" +
+                "\t * Cost: 5gp \n" +
+                "\t * dmg Dice: 1d6 \n" +
+                "\t * Use Shield: yes \n");
+
+        System.out.print("3. crossBow \n" +
+                "\t * Cost: 25gp \n" +
+                "\t * dmg Dice: 2d8 \n" +
+                "\t * Use Shield: no \n");
+
+        System.out.print("4. hammer \n" +
+                "\t * Cost: 10gp \n" +
+                "\t * dmg Dice: 1d8 \n" +
+                "\t * Use Shield: no \n");
+
+        System.out.print("5. axe \n" +
+                "\t * Cost: 5gp \n" +
+                "\t * dmg Dice: 1d6 \n" +
+                "\t * Use Shield: no \n");
+        System.out.println("exit");
+    }
+
     public static void buyWeapon(Scanner user, Player player1){
         if(!player1.weapon.getCurrentWeapon().equals("none")) {
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else {
             System.out.println("Opening shop... (Hit ENTER to continue)");
             user.nextLine();
-            player1.weapon.showWeaponInfo();
+            showWeaponInfo();
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
             System.out.println("Current gold: " + player1.getGold());
