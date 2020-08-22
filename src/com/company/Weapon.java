@@ -155,7 +155,7 @@ public class Weapon extends BaseMech {
         } else {
             currentWeapon = "axe";
             dmgDice = 6;
-            dmgTimes = 2;
+            dmgTimes = 1;
             canShield = false;
             value = price.get("axe");
             upCost = price.get("axe") * dmgTimes;
