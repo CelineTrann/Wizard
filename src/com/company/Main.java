@@ -104,14 +104,14 @@ public class Main {
 
             if(user.nextLine().equalsIgnoreCase("y")){
                 player1.sellWeapon();
+                System.out.println("Transaction complete");
             }
         } else {
             System.out.println("You have no weapon to sell.");
         }
-        System.out.println("Exiting upgrade screen.");
-
     }
 
+    //UPGRADE METHODS
     public static boolean showUpgradeWeapon(Player player1) {
         if(player1.weapon.getCurrentWeapon().equals("none")){
             System.out.println("You have no weapon.");
