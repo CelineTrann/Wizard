@@ -8,6 +8,8 @@ public class Enemy extends BaseMech {
     private int hp, ac;
     private int level, exp;
 
+    String[] enemyName = {"none", "giantWeasel", "giantFrog", "hobgoblin", "brownBear"};
+
     int[][] info = {
             //{lv, dmgDice, dmgTimes, AC, HP, exp}
             {0, 0, 0, 0, 0, 0},     //none
@@ -19,28 +21,15 @@ public class Enemy extends BaseMech {
 
     //------------------- CONSTRUCTOR --------------------
     public Enemy(String enemy){
+        int enemyIndex = findIndex(enemyName, enemy);
+
         name = enemy;
-
-        int row = 0;
-        switch (enemy){
-            case "giantWeasel": row = 1;
-                break;
-            case "giantFrog": row = 2;
-                break;
-            case "hobgoblin": row = 3;
-                break;
-            case "brownBear": row = 4;
-                break;
-            default: name = "none";
-                break;
-        }
-
-        level = info[row][0];
-        dmgDice = info[row][1];
-        dmgTimes = info[row][2];
-        ac = info[row][3];
-        hp = info[row][4];
-        exp = info[row][5];
+        level = info[enemyIndex][0];
+        dmgDice = info[enemyIndex][1];
+        dmgTimes = info[enemyIndex][2];
+        ac = info[enemyIndex][3];
+        hp = info[enemyIndex][4];
+        exp = info[enemyIndex][5];
     }
 
     //------------------- ACCESSORS --------------------
