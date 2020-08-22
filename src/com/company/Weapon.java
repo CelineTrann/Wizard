@@ -45,6 +45,8 @@ public class Weapon extends BaseMech {
 
     public int getUpCost(){ return upCost; }
 
+    public boolean getCanShield(){ return canShield; }
+
 
     //--------------------- BUY ------------------------
     public boolean buyWpn(int gold, String newWeapon){

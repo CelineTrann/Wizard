@@ -268,8 +268,12 @@ public class Main {
     }
 
     public static void defend(Player player1, Combat combat1){
-        combat1.defend(player1);
-        System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
+        if(combat1.defend(player1)){
+            System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
+        } else {
+            System.out.println("You cannot defend with this weapon.");
+        }
+
     }
 
     public static boolean run(Player player1, Combat combat){

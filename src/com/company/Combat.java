@@ -32,8 +32,13 @@ public class Combat extends BaseMech {
         return 0;
     }
 
-    public void defend(Player player1){
-        player1.setAC(false);    }
+    public boolean defend(Player player1){
+        if(player1.weapon.getCanShield()){
+            player1.setAC(false);
+            return true;
+        }
+        return false;
+    }
 
     //return true if successfully escape
     public boolean run(Player player1){
