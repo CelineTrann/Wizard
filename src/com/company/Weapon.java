@@ -4,12 +4,23 @@ import java.util.HashMap;
 
 public class Weapon extends BaseMech {
     private String currentWeapon;
-    private HashMap<String, Integer> price = new HashMap<>();
     private int dmgDice;
     private int dmgTimes;
     private int upCost;
     private int value;
     private boolean canShield;
+
+    String[] weaponNames = {"none", "dagger", "shortSword", "crossBow", "hammer", "axe"};
+
+    //shows {value, dmgTimes, dmgDice, canShield}
+    int[][] weaponInfo = {
+            {0, 0, 0, 1},   //none
+            {2, 1, 4, 1},   //dagger
+            {5, 1, 6, 1},   //shortSword
+            {25, 2, 8, 0},  //crossBow
+            {10, 1, 8, 0},  //hammer
+            {5, 1, 6, 0}    //axe
+    };
 
     //--------------------- CONSTRUCTOR ------------------------
     public Weapon(){
@@ -18,16 +29,7 @@ public class Weapon extends BaseMech {
         dmgTimes = 1;
         canShield = true;
         value = 0;
-
-        //put all cost in
-        price.put("dagger", 2);
-        price.put("shortSword", 5);
-        price.put("crossBow", 25);
-        price.put("hammer", 10);
-        price.put("axe", 5);
-        price.put("none", 0);
-
-        upCost = price.get(currentWeapon) * dmgTimes;
+        upCost = calcUpCost();
     }
 
     //--------------------- ACCESSORS ------------------------
@@ -45,124 +47,31 @@ public class Weapon extends BaseMech {
 
 
     //--------------------- BUY ------------------------
-    //return true if transaction is complete
-    public boolean buyWeapon(int gold, String newWeapon) {
-        switch (newWeapon) {
-            case "dagger":
-                return buyDagger(gold);
-            case "shortSword":
-                return buyShortSword(gold);
-            case "crossBow":
-                return buyCrossBow(gold);
-            case "hammer":
-                return buyHammer(gold);
-            case "axe":
-                return buyAxe(gold);
-            default:
-                return false;
-        }
+    public int arrPrice(String weapon){
+        int index = findIndex(weaponNames, weapon);
+        return weaponInfo[index][0];
     }
 
-    //always buy at base value then have to upgrade
-    private boolean buyDagger(int gold){
+    public int calcUpCost(){
+        return value * dmgTimes;
+    }
+
+    public boolean buyWpn(int gold, String newWeapon){
+        int weaponIndex = findIndex(weaponNames, newWeapon);
+
         if(!currentWeapon.equals("none")){
-            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
             return false;
-
-        } else if(gold < price.get("dagger")) {
-            System.out.println("Not enough gold.");
+        } else if(gold < arrPrice(newWeapon)){
             return false;
-
         } else {
-            currentWeapon = "dagger";
-            dmgDice = 4;
-            dmgTimes = 1;
-            canShield = true;
-            value = price.get("dagger");
-            upCost = price.get("dagger") * dmgTimes;
-            System.out.println("Transaction complete.");
+            currentWeapon = weaponNames[weaponIndex];
+            value = weaponInfo[weaponIndex][0];
+            dmgTimes = weaponInfo[weaponIndex][1];
+            dmgDice = weaponInfo[weaponIndex][2];
+            canShield = weaponInfo[weaponIndex][3] == 0;
+            upCost = calcUpCost();
             return true;
         }
-    }
-
-    private boolean buyShortSword(int gold){
-        if(!currentWeapon.equals("none")){
-            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
-
-        } else if(gold < price.get("shortSword")) {
-            System.out.println("Not enough gold.");
-
-        } else {
-            currentWeapon = "shortSword";
-            dmgDice = 6;
-            dmgTimes = 1;
-            canShield = true;
-            value = price.get("shortSword");
-            upCost = price.get("shortSword") * dmgTimes;
-            System.out.println("Transaction complete.");
-            return true;
-        }
-        return false;
-    }
-
-    private boolean buyCrossBow(int gold){
-        if(!currentWeapon.equals("none")){
-            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
-
-        } else if(gold < price.get("crossBow")) {
-            System.out.println("Not enough gold.");
-
-        } else {
-            currentWeapon = "crossBow";
-            dmgDice = 8;
-            dmgTimes = 2;
-            canShield = false;
-            value = price.get("crossBow");
-            upCost = price.get("crossBow") * dmgTimes;
-            System.out.println("Transaction complete.");
-            return true;
-        }
-        return false;
-    }
-
-    private boolean buyHammer(int gold){
-        if(!currentWeapon.equals("none")){
-            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
-
-        } else if(gold < price.get("hammer")) {
-            System.out.println("Not enough gold.");
-
-        } else {
-            currentWeapon = "hammer";
-            dmgDice = 8;
-            dmgTimes = 1;
-            canShield = false;
-            value = price.get("hammer");
-            upCost = price.get("hammer") * dmgTimes;
-            System.out.println("Transaction complete.");
-            return true;
-        }
-        return false;
-    }
-
-    private boolean buyAxe(int gold){
-        if(!currentWeapon.equals("none")){
-            System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
-
-        } else if(gold < price.get("axe")) {
-            System.out.println("Not enough gold.");
-
-        } else {
-            currentWeapon = "axe";
-            dmgDice = 6;
-            dmgTimes = 1;
-            canShield = false;
-            value = price.get("axe");
-            upCost = price.get("axe") * dmgTimes;
-            System.out.println("Transaction complete.");
-            return true;
-        }
-        return false;
     }
 
     //--------------------- SELL ------------------------
@@ -191,7 +100,7 @@ public class Weapon extends BaseMech {
             value += upCost;
             int tempCost = upCost;
             dmgTimes++;
-            upCost = price.get(currentWeapon) * dmgTimes;
+            upCost = calcUpCost();
             return tempCost;
         }
     }

@@ -14,4 +14,13 @@ public class BaseMech {
 
         return sum;
     }
+
+    public int findIndex(String[] arr, String thing){
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i].equals(thing)){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

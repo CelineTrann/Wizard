@@ -118,7 +118,11 @@ public class Main {
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
             System.out.println("Current gold: " + player1.getGold());
-            player1.buyWeapon(user.nextLine());
+            if(player1.buyWeapon(user.nextLine())){
+                System.out.println("Transaction complete.");
+            } else {
+                System.out.println("Not enough gold");
+            }
         }
 
     }

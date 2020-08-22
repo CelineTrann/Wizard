@@ -144,10 +144,12 @@ public class Player extends BaseMech {
         return false;
     }
 
-    public void buyWeapon(String newWeapon) {
-        if(weapon.buyWeapon(gold, newWeapon)) {
+    public boolean buyWeapon(String newWeapon) {
+        if(weapon.buyWpn(gold, newWeapon)) {
             setGold(true, weapon.getValue());
+            return true;
         }
+        return false;
     }
 
     public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
