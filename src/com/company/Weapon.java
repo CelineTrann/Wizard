@@ -3,13 +3,13 @@ package com.company;
 import java.util.HashMap;
 
 public class Weapon extends BaseMech {
-    String currentWeapon;
-    HashMap<String, Integer> price = new HashMap<>();
-    int dmgDice;
-    int dmgTimes;
-    int upCost;
-    int value;
-    boolean canShield;
+    private String currentWeapon;
+    private HashMap<String, Integer> price = new HashMap<>();
+    private int dmgDice;
+    private int dmgTimes;
+    private int upCost;
+    private int value;
+    private boolean canShield;
 
     //--------------------- CONSTRUCTOR ------------------------
     public Weapon(){
@@ -31,13 +31,13 @@ public class Weapon extends BaseMech {
     }
 
     //--------------------- ACCESSORS ------------------------
-    public int getDamage(){
-        return rollDice(dmgTimes, dmgDice);
-    }
-
     public String getCurrentWeapon(){
         return currentWeapon;
     }
+
+    public int getDmgDice() { return dmgDice; }
+
+    public int getDmgTimes(){ return dmgTimes; }
 
     //--------------------- BUY ------------------------
     public void showWeaponInfo(){
@@ -248,4 +248,12 @@ public class Weapon extends BaseMech {
         }
     }
 
+    //--------------------- UPGRADE ------------------------
+    public boolean attackRoll(Enemy enemy){
+        return enemy.getAc() < rollDice(1, 20);
+    }
+
+    public int dmgRoll(){
+        return rollDice(dmgTimes, dmgDice);
+    }
 }

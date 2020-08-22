@@ -121,6 +121,14 @@ public class Player extends BaseMech {
 
     public void setExp(int newExp){ exp += newExp; }
 
+    public void setAC(boolean reset){
+        if(reset){
+            ac = maxAc;
+        } else {
+            ac += 2;
+        }
+    }
+
     //------------------- WEAPON METHODS --------------------
     //subtract gold when upgrading weapon
     public void upgradeWeapon() { setGold(true, weapon.upgrade(gold)); }

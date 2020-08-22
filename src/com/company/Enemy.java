@@ -3,10 +3,11 @@ package com.company;
 import java.util.HashMap;
 
 public class Enemy extends BaseMech {
-    String name;
-    int dmgDice, dmgTimes;
-    int hp, ac;
-    int level, exp;
+    private String name;
+    private int dmgDice, dmgTimes;
+    private int hp, ac;
+    private int level, exp;
+    private boolean isDead;
 
     int[][] info = {
             //{lv, dmgDice, dmgTimes, AC, HP, exp}
@@ -16,8 +17,6 @@ public class Enemy extends BaseMech {
             {2, 8, 1, 18, 11, 100}, //hobgoblin
             {2, 6, 2, 11, 34, 200}  //brownBear
     };
-
-    String[] creatures = {"none", "giantWeasel", "giantFrog", "hobgoblin", "brownBear"};
 
     //------------------- CONSTRUCTOR --------------------
     public Enemy(String enemy){
@@ -43,7 +42,7 @@ public class Enemy extends BaseMech {
         ac = info[row][3];
         hp = info[row][4];
         exp = info[row][5];
-
+        isDead = false;
     }
 
     //------------------- ACCESSORS --------------------
@@ -53,23 +52,30 @@ public class Enemy extends BaseMech {
 
     public int getExp(){ return exp; }
 
+    public int getDmgDice(){ return dmgDice; }
+
+    public int getDmgTimes(){ return dmgTimes; }
+
+    public String getName(){ return name; }
+
+    public boolean getIsDead() { return isDead; }
+
     //------------------- MODIFIERS --------------------
     public void setHp(int dmg){
         hp -= dmg;
     }
 
     //------------------- METHODS --------------------
-    //returns true if attack hits
+    //says enemy is dead if hp is less than or equal to zero (0)
+    public void isDead(){
+        isDead = hp <= 0;
+    }
+
     public boolean attackRoll(Player player1){
         return player1.getAc() < rollDice(1, 20);
     }
 
-    public int dmgRoll() {
+    public int dmgRoll(){
         return rollDice(dmgTimes, dmgDice);
-    }
-
-    //says enemy is dead if hp is less than or equal to zero (0)
-    public boolean isDead(){
-        return hp <= 0;
     }
 }
