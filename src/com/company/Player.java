@@ -8,7 +8,6 @@ public class Player extends BaseMech {
     private String name;
     private final String race;
     private int maxHp;
-    private int maxAc;
     private int hp;
     private int ac;
     private int level;
@@ -34,8 +33,7 @@ public class Player extends BaseMech {
 
         createStats();
         setHp(level);
-        maxAc = 10 + getStatMod("dex");
-        ac = maxAc;
+        ac = 10 + getStatMod("dex");
     }
 
     //randomly roll stats based on 3d6
@@ -56,6 +54,10 @@ public class Player extends BaseMech {
 
     //get current hp
     public int getHp() { return hp; }
+
+    public int getMaxHp(){ return maxHp; }
+
+    public int getExp(){ return exp; }
 
     public int getGold(){ return gold; }
 
@@ -123,7 +125,7 @@ public class Player extends BaseMech {
 
     public void setAC(boolean reset){
         if(reset){
-            ac = maxAc;
+            ac -= 2;
         } else {
             ac += 2;
         }
@@ -152,10 +154,8 @@ public class Player extends BaseMech {
         return false;
     }
 
-    //return true if dead
-    public boolean takeDmg(int dmg){
+    public void takeDmg(int dmg){
         hp -= dmg;
-        return hp <= 0;
     }
 
     public boolean heal(int heal){
@@ -165,6 +165,11 @@ public class Player extends BaseMech {
             hp += heal;
             return true;
         }
+    }
+
+    //return true if dead
+    public boolean isDead(){
+        return hp <= 0;
     }
 
     //print player info

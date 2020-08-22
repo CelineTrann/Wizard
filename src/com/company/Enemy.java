@@ -7,7 +7,6 @@ public class Enemy extends BaseMech {
     private int dmgDice, dmgTimes;
     private int hp, ac;
     private int level, exp;
-    private boolean isDead;
 
     int[][] info = {
             //{lv, dmgDice, dmgTimes, AC, HP, exp}
@@ -42,7 +41,6 @@ public class Enemy extends BaseMech {
         ac = info[row][3];
         hp = info[row][4];
         exp = info[row][5];
-        isDead = false;
     }
 
     //------------------- ACCESSORS --------------------
@@ -58,8 +56,6 @@ public class Enemy extends BaseMech {
 
     public String getName(){ return name; }
 
-    public boolean getIsDead() { return isDead; }
-
     //------------------- MODIFIERS --------------------
     public void setHp(int dmg){
         hp -= dmg;
@@ -67,8 +63,8 @@ public class Enemy extends BaseMech {
 
     //------------------- METHODS --------------------
     //says enemy is dead if hp is less than or equal to zero (0)
-    public void isDead(){
-        isDead = hp <= 0;
+    public boolean isDead(){
+        return hp <= 0;
     }
 
     public boolean attackRoll(Player player1){
