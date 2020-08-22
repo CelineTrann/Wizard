@@ -9,6 +9,7 @@ public class Player extends BaseMech {
     private final String race;
     private int maxHp;
     private int hp;
+    private int maxAc;
     private int ac;
     private int level;
     private int exp;
@@ -33,7 +34,8 @@ public class Player extends BaseMech {
 
         createStats();
         setHp(level);
-        ac = 10 + getStatMod("dex");
+        maxAc = 10 + getStatMod("dex");
+        ac = maxAc;
     }
 
     //randomly roll stats based on 3d6
@@ -125,7 +127,7 @@ public class Player extends BaseMech {
 
     public void setAC(boolean reset){
         if(reset){
-            ac -= 2;
+            ac = maxAc;
         } else {
             ac += 2;
         }

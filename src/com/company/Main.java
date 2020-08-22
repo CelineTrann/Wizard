@@ -220,7 +220,7 @@ public class Main {
 
     public static void defend(Player player1, Combat combat1){
         combat1.defend(player1);
-        System.out.println("Your AC increased to" + player1.getAc() + " for this round.");
+        System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
     }
 
     public static boolean run(Player player1, Combat combat){
