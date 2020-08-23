@@ -64,7 +64,7 @@ public class Weapon extends BaseMech {
             value = baseVal;
             dmgTimes = weaponInfo[weaponIndex][1];
             dmgDice = weaponInfo[weaponIndex][2];
-            canShield = weaponInfo[weaponIndex][3] == 0;
+            canShield = weaponInfo[weaponIndex][3] == 1;
             upCost = calcUpCost();
             return true;
         }
