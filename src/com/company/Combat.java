@@ -42,7 +42,7 @@ public class Combat extends BaseMech {
 
     //return true if successfully escape
     public boolean run(Player player1){
-        return rollDice(1, 20) + player1.getStatMod("dex") > 15;
+        return rollDice(1, 20) + player1.getStatMod("dex") > 10;
     }
 
     //------------------- ENEMY ACTION --------------------
