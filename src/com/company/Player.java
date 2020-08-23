@@ -17,6 +17,7 @@ public class Player extends BaseMech {
 
     //store character stat values
     private HashMap<String, Integer> stats = new HashMap<>();
+    public Inventory inventory;
     public Weapon weapon = new Weapon();
 
     //exp need to level to next level
@@ -36,6 +37,7 @@ public class Player extends BaseMech {
         setHp(level);
         maxAc = 10 + getStatMod("dex");
         ac = maxAc;
+        inventory = new Inventory();
     }
 
     //randomly roll stats based on 3d6

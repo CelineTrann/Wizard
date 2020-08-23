@@ -118,7 +118,7 @@ public class Main {
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
             System.out.println("Current gold: " + player1.getGold());
-            if(player1.buyWeapon(user.nextLine())){
+            if(player1.inventory.buyWeapon(user.nextLine())){
                 System.out.println("Transaction complete.");
             } else {
                 System.out.println("Not enough gold");
@@ -134,7 +134,7 @@ public class Main {
             System.out.println("Would you like to sell your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
-                player1.sellWeapon();
+                player1.inventory.sellWeapon();
                 System.out.println("Transaction complete");
             }
         } else {
@@ -161,7 +161,7 @@ public class Main {
             System.out.println("Would you like to upgrade your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
-                if(player1.upgradeWeapon()){
+                if(player1.inventory.upgradeWeapon()){
                     System.out.println("Upgrade Complete \n");
                 } else {
                     System.out.println("You don't have enough gold.");
