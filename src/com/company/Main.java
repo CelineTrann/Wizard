@@ -54,7 +54,7 @@ public class Main {
 
     // Currently only supporting weapons
     public static void showGuild(Player player1){
-        System.out.println("\nWeapons (" + player1.getGold() + "gp)");
+        System.out.println("\nWeapons (" + player1.inventory.getGold() + "gp)");
         System.out.println("\t 1. buy \n" +
                 "\t 2. sell \n" +
                 "\t 3. upgrade \n" +
@@ -117,7 +117,7 @@ public class Main {
             showWeaponInfo();
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
-            System.out.println("Current gold: " + player1.getGold());
+            System.out.println("Current gold: " + player1.inventory.getGold());
             if(player1.inventory.buyWeapon(user.nextLine())){
                 System.out.println("Transaction complete.");
             } else {
@@ -192,9 +192,9 @@ public class Main {
     }
 
     //return true if user wants to continue;
-    //Fixed: dead variable prevents enemy death message twice due to recurssion
+    //Fixed: dead variable prevents enemy death message twice due to recursion
     public static boolean combatRounds(Scanner user, Player player1, Combat combat, boolean dead) {
-        //if died get out of recurssion loop
+        //if died get out of recursion loop
         if (died(player1)){
             return false;
         }

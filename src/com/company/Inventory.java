@@ -5,9 +5,20 @@ public class Inventory {
     int gold;
     int healthPotions;
 
+    //------------------- CONSTRUCTORS --------------------
     public Inventory(){
+        weapon = new Weapon();
         gold = 15;
         healthPotions = 0;
+    }
+
+    //------------------- ACCESSORS --------------------
+    public int getGold(){
+        return gold;
+    }
+
+    public int getHealthPotions(){
+        return healthPotions;
     }
 
     //------------------- MODIFIERS --------------------
@@ -16,6 +27,14 @@ public class Inventory {
             gold -= cost;
         } else {
             gold += cost;
+        }
+    }
+
+    public void setHealthPotions(boolean buy){
+        if(buy) {
+            healthPotions++;
+        } else {
+            healthPotions--;
         }
     }
 
