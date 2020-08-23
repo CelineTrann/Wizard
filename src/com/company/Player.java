@@ -30,7 +30,6 @@ public class Player extends BaseMech {
         name = newName;
         race = newRace;
         level = newLevel;
-        gold = 15;  //TODO default value should be 2gp for game
         exp = 0;
 
         createStats();
@@ -117,13 +116,13 @@ public class Player extends BaseMech {
         hp = maxHp;
     }
 
-    public void setGold(boolean buy, int cost){
-        if(buy){
-            gold -= cost;
-        } else {
-            gold += cost;
-        }
-    }
+//    public void setGold(boolean buy, int cost){
+//        if(buy){
+//            gold -= cost;
+//        } else {
+//            gold += cost;
+//        }
+//    }
 
     public void setExp(int newExp){ exp += newExp; }
 
@@ -137,24 +136,24 @@ public class Player extends BaseMech {
 
     //------------------- WEAPON METHODS --------------------
     //subtract gold when upgrading weapon, return true if complete
-    public boolean upgradeWeapon() {
-        int cost = weapon.upgrade(gold);
-        if(cost > 0){
-            setGold(true, cost);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean buyWeapon(String newWeapon) {
-        if(weapon.buyWpn(gold, newWeapon)) {
-            setGold(true, weapon.getValue());
-            return true;
-        }
-        return false;
-    }
-
-    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
+//    public boolean upgradeWeapon() {
+//        int cost = weapon.upgrade(gold);
+//        if(cost > 0){
+//            setGold(true, cost);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean buyWeapon(String newWeapon) {
+//        if(weapon.buyWpn(gold, newWeapon)) {
+//            setGold(true, weapon.getValue());
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
 
     //------------------- GENERAL METHODS --------------------
     //TODO print out level up message if return true.

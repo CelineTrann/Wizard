@@ -1,13 +1,11 @@
 package com.company;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class Combat extends BaseMech {
     //------------------- ATTRIBUTES --------------------
     String[] creatures = {"none", "giantWeasel", "giantFrog", "hobgoblin", "brownBear"};
     Enemy enemy;
-    boolean exit;
 
     //------------------- CONSTRUCTORS --------------------
     public Combat(Player player1){
