@@ -221,7 +221,6 @@ public class Main {
 
         }
 
-        System.out.println("How did you get here?");
         return wilContinue(user);
     }
 
