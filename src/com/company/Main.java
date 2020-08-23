@@ -110,7 +110,7 @@ public class Main {
     }
 
     public static void buyWeapon(Scanner user, Player player1){
-        if(!player1.weapon.getCurrentWeapon().equals("none")) {
+        if(!player1.inventory.weapon.getCurrentWeapon().equals("none")) {
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else {
             System.out.println("Opening shop... (Hit ENTER to continue)");
@@ -129,9 +129,9 @@ public class Main {
     }
 
     public static void sellWeapon(Scanner user, Player player1){
-        if(player1.weapon.showSellWeapon()){
-            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
-            System.out.println("Price: " + player1.weapon.getValue() + "gp");
+        if(player1.inventory.weapon.showSellWeapon()){
+            System.out.println("Weapon: " + player1.inventory.weapon.getCurrentWeapon());
+            System.out.println("Price: " + player1.inventory.weapon.getValue() + "gp");
             System.out.println("Would you like to sell your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
@@ -145,14 +145,14 @@ public class Main {
 
     //UPGRADE METHODS
     public static boolean showUpgradeWeapon(Player player1) {
-        if(player1.weapon.getCurrentWeapon().equals("none")){
+        if(player1.inventory.weapon.getCurrentWeapon().equals("none")){
             System.out.println("You have no weapon.");
             return false;
         } else {
-            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
-            System.out.println("\t Upgrade cost: " + player1.weapon.getUpCost() + "gp");
-            System.out.println("\t New Dmg Dice: " + (player1.weapon.getDmgTimes() + 1)
-                    + "d" + player1.weapon.getDmgDice());
+            System.out.println("Weapon: " + player1.inventory.weapon.getCurrentWeapon());
+            System.out.println("\t Upgrade cost: " + player1.inventory.weapon.getUpCost() + "gp");
+            System.out.println("\t New Dmg Dice: " + (player1.inventory.weapon.getDmgTimes() + 1)
+                    + "d" + player1.inventory.weapon.getDmgDice());
             return true;
         }
     }
@@ -193,7 +193,6 @@ public class Main {
     }
 
     //return true if user wants to continue;
-    //Fixed: dead variable prevents enemy death message twice due to recursion
     public static boolean combatRounds(Scanner user, Player player1, Combat combat, boolean dead) {
         //if died get out of recursion loop
         if (died(player1)){
@@ -234,9 +233,10 @@ public class Main {
     //returning boolean {valid response, run}
     public static boolean[] showCombatOption(Scanner user, Player player1, Combat combat){
         System.out.println("What will you do?");
-        System.out.println("\t1. Attack \n" +
-                "\t2. Defend \n" +
-                "\t3. Run");
+        System.out.println("\t1. attack \n" +
+                "\t2. defend \n" +
+                "\t3. heal \n" +
+                "\t4. run");
 
         switch (user.nextLine()){
             case "attack":
@@ -244,6 +244,9 @@ public class Main {
                 return new boolean[] {true, false};
             case "defend":
                 defend(player1, combat);
+                return new boolean[] {true, false};
+            case "heal":
+                heal(player1);
                 return new boolean[] {true, false};
             case "run":
                 return new boolean[] {true, run(player1, combat)};
@@ -275,6 +278,18 @@ public class Main {
             System.out.println("You cannot defend with this weapon.");
         }
 
+    }
+
+    public static void heal(Player player1){
+        if(player1.heal()){
+            System.out.println("You healed: " + player1.inventory.getHealPoints() + "points");
+            System.out.println("Current health: " + player1.getHp());
+            System.out.println("Health Potions left: " + player1.inventory.getHealthPotions());
+        } else if(player1.inventory.getHealthPotions() == 0) {
+            System.out.println("You are out of health potions.");
+        } else {
+            System.out.println("You are at full health.");
+        }
     }
 
     public static boolean run(Player player1, Combat combat){

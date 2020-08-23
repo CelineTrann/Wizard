@@ -22,8 +22,8 @@ public class Combat extends BaseMech {
     //------------------- PLAYER ACTION --------------------
     //return true if enemy is hit
     public int attack(Player player1){
-        if(player1.weapon.attackRoll(enemy)) {
-            int dmg = player1.weapon.dmgRoll();
+        if(player1.inventory.weapon.attackRoll(enemy)) {
+            int dmg = player1.inventory.weapon.dmgRoll();
             enemy.setHp(dmg);
             return dmg;
         }
@@ -31,7 +31,7 @@ public class Combat extends BaseMech {
     }
 
     public boolean defend(Player player1){
-        if(player1.weapon.getCanShield()){
+        if(player1.inventory.weapon.getCanShield()){
             player1.setAC(false);
             return true;
         }

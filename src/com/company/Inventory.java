@@ -2,15 +2,15 @@ package com.company;
 
 public class Inventory {
     Weapon weapon;
-    int gold;
-    int healthPotions;
+    private int gold;
+    private int healthPotions;
     private int healPoints = 5;
 
     //------------------- CONSTRUCTORS --------------------
     public Inventory(){
         weapon = new Weapon();
         gold = 15;
-        healthPotions = 0;
+        healthPotions = 1;
     }
 
     //------------------- ACCESSORS --------------------

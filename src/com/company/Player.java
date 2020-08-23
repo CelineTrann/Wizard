@@ -13,12 +13,12 @@ public class Player extends BaseMech {
     private int ac;
     private int level;
     private int exp;
-    private int gold;
+    //private int gold;
 
     //store character stat values
     private HashMap<String, Integer> stats = new HashMap<>();
     public Inventory inventory;
-    public Weapon weapon = new Weapon();
+    //public Weapon weapon = new Weapon();
 
     //exp need to level to next level
     int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
@@ -173,7 +173,7 @@ public class Player extends BaseMech {
     }
 
     public boolean heal(){
-        if(hp == maxHp || inventory.healthPotions == 0){
+        if(hp == maxHp || inventory.getHealthPotions() == 0){
             return false;   //cannot heal anymore
         } else {
             hp += inventory.getHealPoints();
