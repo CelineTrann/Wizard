@@ -4,6 +4,7 @@ public class Inventory {
     Weapon weapon;
     int gold;
     int healthPotions;
+    private int healPoints = 5;
 
     //------------------- CONSTRUCTORS --------------------
     public Inventory(){
@@ -19,6 +20,10 @@ public class Inventory {
 
     public int getHealthPotions(){
         return healthPotions;
+    }
+
+    public int getHealPoints(){
+        return healPoints;
     }
 
     //------------------- MODIFIERS --------------------

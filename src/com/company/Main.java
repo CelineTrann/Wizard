@@ -80,6 +80,7 @@ public class Main {
         return true;
     }
 
+    //------------------- GUILD: WEAPONS --------------------
     public static void showWeaponInfo(){
         System.out.print("1. dagger \n" +
                 "\t * Cost: 2gp \n" +

@@ -33,7 +33,7 @@ public class Player extends BaseMech {
         exp = 0;
 
         createStats();
-        setHp(level);
+        setMaxHp(level);
         maxAc = 10 + getStatMod("dex");
         ac = maxAc;
         inventory = new Inventory();
@@ -62,7 +62,7 @@ public class Player extends BaseMech {
 
     public int getExp(){ return exp; }
 
-    public int getGold(){ return gold; }
+//    public int getGold(){ return gold; }
 
     //get stat modifier based on stat (only 1-20)
     public int getStatMod(String stat){
@@ -107,7 +107,7 @@ public class Player extends BaseMech {
     //------------------- MODIFIERS --------------------
     //create hp: current only calculate wizards
     //TODO add hit dice variable to make more generic?
-    public void setHp(int level){
+    public void setMaxHp(int level){
         if(level == 1){
             maxHp = 6 + getStatMod("con");
         } else {
@@ -162,7 +162,7 @@ public class Player extends BaseMech {
         if(exp >= lvUp[level]){
             exp = 0;
             level++;
-            setHp(level);
+            setMaxHp(level);
             return true;
         }
         return false;
@@ -172,11 +172,12 @@ public class Player extends BaseMech {
         hp -= dmg;
     }
 
-    public boolean heal(int heal){
-        if(hp == maxHp){
+    public boolean heal(){
+        if(hp == maxHp || inventory.healthPotions == 0){
             return false;   //cannot heal anymore
         } else {
-            hp += heal;
+            hp += inventory.getHealPoints();
+            inventory.setHealthPotions(false);
             return true;
         }
     }
