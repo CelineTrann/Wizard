@@ -13,7 +13,7 @@ public class Combat extends BaseMech {
         enemy = new Enemy(creatures[enemyIndex]);
     }
 
-
+    //return which enemy can be access in enemy array
     private int getEnemyIndex(int level){
         Random randomEnemy = new Random();
         return randomEnemy.nextInt(level * 2) + 1;

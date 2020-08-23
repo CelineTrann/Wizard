@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.HashMap;
-
 public class Weapon extends BaseMech {
     private String currentWeapon;
     private int dmgDice;
@@ -30,7 +28,6 @@ public class Weapon extends BaseMech {
         dmgTimes = 1;
         canShield = true;
         baseVal = 0;
-        value = baseVal;
         upCost = calcUpCost();
     }
 

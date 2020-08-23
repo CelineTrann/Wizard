@@ -1,10 +1,9 @@
 package com.company;
 
-import java.util.HashMap;
-
 public class Enemy extends BaseMech {
     private String name;
-    private int dmgDice, dmgTimes;
+    private final int dmgDice;
+    private int dmgTimes;
     private int hp, ac;
     private int level, exp;
 
@@ -38,10 +37,6 @@ public class Enemy extends BaseMech {
     public int getAc(){ return ac; }
 
     public int getExp(){ return exp; }
-
-    public int getDmgDice(){ return dmgDice; }
-
-    public int getDmgTimes(){ return dmgTimes; }
 
     public String getName(){ return name; }
 
