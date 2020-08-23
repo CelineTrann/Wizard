@@ -212,7 +212,7 @@ public class Main {
         //Enemy Attacks
         if (!enemyDied(player1, combat) && !died(player1)) {
             attackPlayer(player1, combat);
-            endDefend(player1);
+            endDefend(player1, good[2]);
             return combatRounds(user, player1, combat, dead); //recursion will loop through round until quit, run, or player dies
 
         } else if(dead){
@@ -229,7 +229,7 @@ public class Main {
         return user.nextLine().equals("y");
     }
 
-    //returning boolean {valid response, run}
+    //returning boolean {valid response, run, defended}
     public static boolean[] showCombatOption(Scanner user, Player player1, Combat combat){
         System.out.println("What will you do?");
         System.out.println("\t1. attack \n" +
@@ -240,18 +240,17 @@ public class Main {
         switch (user.nextLine()){
             case "attack":
                 attack(player1, combat);
-                return new boolean[] {true, false};
+                return new boolean[] {true, false, false};
             case "defend":
-                defend(player1, combat);
-                return new boolean[] {true, false};
+                return new boolean[] {true, false, defend(player1, combat)};
             case "heal":
                 heal(player1);
-                return new boolean[] {true, false};
+                return new boolean[] {true, false, false};
             case "run":
-                return new boolean[] {true, run(player1, combat)};
+                return new boolean[] {true, run(player1, combat), false};
             default:
                 System.out.println("Invalid option");
-                return new boolean[] {false, false};
+                return new boolean[] {false, false, false};
         }
     }
 
@@ -270,13 +269,22 @@ public class Main {
         }
     }
 
-    public static void defend(Player player1, Combat combat1){
+    public static boolean defend(Player player1, Combat combat1){
         if(combat1.defend(player1)){
             System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
+            return true;
         } else {
             System.out.println("You cannot defend with this weapon.");
+            return false;
         }
 
+    }
+
+    public static void endDefend(Player player1, boolean defended){
+        if(defended && !player1.isDead()){
+            player1.setAC(true);
+            System.out.println("You have lowered you shield. You AC returns to " + player1.getAc());
+        }
     }
 
     public static void heal(Player player1){
@@ -299,11 +307,6 @@ public class Main {
         System.out.println("You failed to escape");
         return false;
 
-    }
-
-    public static void endDefend(Player player1){
-        player1.setAC(true);
-        System.out.println("You have lowered you shield. You AC returns to " + player1.getAc());
     }
 
     public static boolean died(Player player1){
