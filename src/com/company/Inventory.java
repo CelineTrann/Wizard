@@ -4,6 +4,7 @@ public class Inventory {
     Weapon weapon;
     private int gold;
     private int healthPotions;
+    private int healthPotionCost = 5;
     private int healPoints = 5;
 
     //------------------- CONSTRUCTORS --------------------
@@ -40,6 +41,18 @@ public class Inventory {
             healthPotions++;
         } else {
             healthPotions--;
+        }
+    }
+
+    public boolean buyHealthPotions(int amount){
+        if(amount == 0){
+            return true;
+        } else if(gold < healthPotionCost * amount){
+            return false;
+        } else {
+            setHealthPotions(true);
+            setGold(true, healthPotionCost);
+            return buyHealthPotions(amount - 1);
         }
     }
 

@@ -29,7 +29,7 @@ public class Main {
             System.out.println("try again!");
         }
 
-        useGuild(user, player1);
+        useGuild(user, player1, "guild");
 
 
         //------------------- COMBAT TUT. --------------------
@@ -43,17 +43,64 @@ public class Main {
 
     }
 
+    //-----------------------------------------------------------------------
     //------------------- GUILD METHODS --------------------
-    public static void useGuild(Scanner user, Player player1){
-        do{
-            showGuild(player1);
-        } while (guildChoice(user, player1));
+    public static void useGuild(Scanner user, Player player1, String section){
+        switch (section) {
+            case "guild":
+                do {
+                    showGuild(player1);
+                } while (guildChoice(user, player1));
 
-        System.out.println("Exiting Guild");
+                System.out.println("Exiting Guild");
+                break;
+
+            case "weapons":
+                do {
+                    showWGuild(player1);
+                } while (wGuildChoice(user, player1));
+
+                System.out.println("Exiting Weapons Shop");
+                break;
+
+            case "healthPotions":
+                do {
+                    showHGuild(player1);
+                } while (hGuildChoice(user, player1));
+
+                System.out.println("Exiting Health Potion Shop");
+                break;
+
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
+    }
+    public static void showGuild(Player player1){
+        System.out.println("\nGuild (" + player1.inventory.getGold() + "gp)");
+        System.out.println("\t 1. weapons \n" +
+                "\t 2. healthPotions  \n" +
+                "\t 3. exit");
     }
 
-    // Currently only supporting weapons
-    public static void showGuild(Player player1){
+    public static boolean guildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "weapons":
+                useGuild(user, player1, "weapons");
+                break;
+            case "healthPotions":
+                useGuild(user, player1, "healthPotions");
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid input");
+        }
+        return true;
+    }
+
+    //------------------- GUILD: WEAPONS --------------------
+    public static void showWGuild(Player player1){
         System.out.println("\nWeapons (" + player1.inventory.getGold() + "gp)");
         System.out.println("\t 1. buy \n" +
                 "\t 2. sell \n" +
@@ -61,7 +108,7 @@ public class Main {
                 "\t 4. exit");
     }
 
-    public static boolean guildChoice(Scanner user, Player player1){
+    public static boolean wGuildChoice(Scanner user, Player player1){
         switch (user.nextLine()){
             case "buy":
                 buyWeapon(user, player1);
@@ -80,7 +127,6 @@ public class Main {
         return true;
     }
 
-    //------------------- GUILD: WEAPONS --------------------
     public static void showWeaponInfo(){
         System.out.print("1. dagger \n" +
                 "\t * Cost: 2gp \n" +
@@ -171,6 +217,44 @@ public class Main {
         }
     }
 
+    //------------------- GUILD: HEALTH POTIONS --------------------
+    public static void showHGuild(Player player1){
+        System.out.println("Health Potions (" + player1.inventory.getGold() + "gp, "
+                + player1.getHp() + "/" + player1.getMaxHp() + "hp), "
+                + "Health Potions: " + player1.inventory.getHealthPotions());
+        System.out.println("\t1. buy \n" +
+                "\t2. heal \n" +
+                "\t3. exit");
+    }
+
+    public static boolean hGuildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "buy":
+                buyHealthPotion(user, player1);
+                break;
+            case "heal":
+                heal(player1);
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid option");
+        }
+        return true;
+    }
+
+    public static void buyHealthPotion(Scanner user, Player player1){
+        System.out.println("Cost: 5gp, Heals: 5hp");
+        System.out.println("How many would you like to buy?");
+        if(player1.inventory.buyHealthPotions(user.nextInt())){
+            System.out.println("Thank you for your purchase.");
+        } else {
+            System.out.println("You don't have enough money");
+        }
+        user.nextLine();
+    }
+
+    //-----------------------------------------------------------------------
     //------------------- PLAYER METHODS --------------------
     public static void viewStats(Scanner user, Player player1) {
         System.out.println("Would you like to see your overall stats? (y/n)");
@@ -179,6 +263,8 @@ public class Main {
         }
     }
 
+
+    //-----------------------------------------------------------------------
     //------------------- COMBAT METHODS --------------------
     public static void forest(Scanner user, Player player1){
         Combat combat1;
@@ -254,7 +340,7 @@ public class Main {
         }
     }
 
-    //Player Function
+    //------------------- COMBAT: PLAYERS --------------------
     public static void attack(Player player1, Combat combat){
         int dmg = combat.attack(player1);
         if(dmg > 0){
@@ -321,7 +407,7 @@ public class Main {
         return false;
     }
 
-    //Enemy functions
+    //------------------- COMBAT: ENEMY --------------------
     public static void attackPlayer(Player player1, Combat combat){
         int dmg = combat.attackPlayer(player1);
         if(dmg > 0){
