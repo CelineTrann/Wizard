@@ -108,7 +108,7 @@ public class Weapon extends BaseMech {
         }
     }
 
-    //--------------------- UPGRADE ------------------------
+    //--------------------- ATTACK ------------------------
     public boolean attackRoll(Enemy enemy){
         return enemy.getAc() < rollDice(1, 20);
     }

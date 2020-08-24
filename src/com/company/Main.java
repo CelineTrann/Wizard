@@ -42,8 +42,9 @@ public class Main {
         forest(user, player1);
 
         //------------------- NORMAL GAMEPLAY --------------------
-        System.out.println("Now that you never thing. Choose what you want to do.");
+        System.out.println("Now that you know everything.");
         do{
+            System.out.println("What do you want to do?");
             System.out.println("1. guild \n" +
                     "2. Forest \n" +
                     "3. exit");
@@ -377,8 +378,11 @@ public class Main {
             } else {
                 System.out.println("Enemy health: " + combat.enemy.getHp());
             }
-        } else {
+        } else if (dmg == 0){
             System.out.println("You missed.");
+
+        } else {
+            System.out.println("You don't have a weapon to attack with.");
         }
     }
 

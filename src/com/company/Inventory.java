@@ -27,6 +27,8 @@ public class Inventory {
         return healPoints;
     }
 
+    public String getWeaponName() { return weapon.getCurrentWeapon(); }
+
     //------------------- MODIFIERS --------------------
     public void setGold(boolean buy, int cost){
         if(buy){
