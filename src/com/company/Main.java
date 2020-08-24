@@ -1,56 +1,151 @@
 package com.company;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
 
+/* Example
+        Frame app = new Frame("app");
+        TextArea textArea = new TextArea();
+        textArea.setBounds(50, 50, 200, 200);
+
+        Button button1 = new Button("Click here");
+        button1.setBounds(50, 300, 60, 30);
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("Why are you like this");
+            }
+        });
+
+        app.add(textArea);
+        app.add(button1);
+        app.setSize(500, 500);
+        app.setLayout(null);
+        app.setVisible(true);
+ */
 
 public class Main {
-
     public static void main(String[] args) {
-        Scanner user = new Scanner(System.in);
+        final String[] name = new String[1];
+        final String[] race = new String[1];
 
-        //--------------------- CREATE CHARACTER ------------------------
-        System.out.println("Hello! Welcome to your new adventure. What is your name?");
-        String name = user.nextLine();
+        Frame app = new Frame("app");
 
-        System.out.println("Welcome " + name + "! What race are your?");
-        String race = user.nextLine();
+        Label l1 = new Label("What is your name?");
+        l1.setBounds(50, 50, 100, 30);
 
-        Player player1 = new Player(name, race, 1);
+        TextField textField = new TextField();
+        textField.setBounds(50, 100, 100, 30);
 
-        viewStats(user, player1);
+        Button enter = new Button("Enter");
+        enter.setBounds(150, 150, 50, 30);
+ /*       enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                name[0] = textField.getText();
+                textField.setText("");
+            }
+        });
+*/
+        app.add(l1);
+        app.add(textField);
+        enter.setSize(400, 400);
+        l1.setVisible(true);
+        textField.setVisible(true);
+        enter.setVisible(true);
 
-        //--------------------- SHOPPING TUT. ------------------------
-        System.out.println("Let me teach you about the store. It can be found at the Adventure guild. \n" +
-                "There you can buy, sell and upgrade weapons. Remember you can only carry one (1) weapon at a time. \n" +
-                "So be sure to sell your weapon before you buy another one. \n");
+        app.setSize(500, 500);
+        app.setLayout(null);
+        app.setVisible(true);
 
-        System.out.println("Type 'guild' to access the guild!");
-        while(!user.nextLine().equalsIgnoreCase("guild")){
-            System.out.println("try again!");
+
+        l1.setText("What is you race?");
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                race[0] = textField.getText();
+                textField.setText("");
+            }
+        });
+
+        Player player1 = new Player(name[0], race[0], 1);
+
+        l1.setText("What would you like to do?");
+        textField.setVisible(false);
+        enter.setVisible(false);
+
+        Button choice1 = new Button("Weapons");
+        choice1.setBounds(50, 100, 30, 30);
+        Button choice2 = new Button("Health Potions");
+        choice1.setBounds(50, 150, 30, 30);
+        Button choice3 = new Button("Exit");
+        choice1.setBounds(50, 200, 30, 30);
+
+        app.add(choice1);
+        app.add(choice2);
+        app.add(choice3);
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(true);
+
+
+//        Scanner user = new Scanner(System.in);
+//
+//        //--------------------- CREATE CHARACTER ------------------------
+//        System.out.println("Hello! Welcome to your new adventure. What is your name?");
+//        String name = user.nextLine();
+//
+//        System.out.println("Welcome " + name + "! What race are your?");
+//        String race = user.nextLine();
+//
+//        Player player1 = new Player(name, race, 1);
+//
+//        viewStats(user, player1);
+//
+//        //--------------------- SHOPPING TUT. ------------------------
+//        System.out.println("Let me teach you about the store. It can be found at the Adventure guild. \n" +
+//                "There you can buy, sell and upgrade weapons. Remember you can only carry one (1) weapon at a time. \n" +
+//                "So be sure to sell your weapon before you buy another one. \n");
+//
+//        System.out.println("Type 'guild' to access the guild!");
+//        while(!user.nextLine().equalsIgnoreCase("guild")){
+//            System.out.println("try again!");
+//        }
+//
+//        useGuild(user, player1, "guild");
+//
+//
+//        //------------------- COMBAT TUT. --------------------
+//        System.out.println("Now let's talk combat");
+//        System.out.println("Type 'forest' to fight monsters!");
+//        while(!user.nextLine().equalsIgnoreCase("forest")){
+//            System.out.println("try again!");
+//        }
+//
+//        forest(user, player1);
+//
+//        //------------------- NORMAL GAMEPLAY --------------------
+//        System.out.println("Now that you know everything.");
+//        do{
+//            System.out.println("What do you want to do?");
+//            System.out.println("1. guild \n" +
+//                    "2. Forest \n" +
+//                    "3. exit");
+//        }while (choices(user, player1) && !player1.isDead());
+//
+//        System.out.println("Thank you for playing.");
+    }
+
+    //-----------------------------------------------------------------------
+    //------------------- PLAYER METHODS --------------------
+    public static void viewStats(Scanner user, Player player1) {
+        System.out.println("Would you like to see your overall stats? (y/n)");
+        if(user.nextLine().equalsIgnoreCase("y")){
+            player1.printPlayerInfo();
         }
-
-        useGuild(user, player1, "guild");
-
-
-        //------------------- COMBAT TUT. --------------------
-        System.out.println("Now let's talk combat");
-        System.out.println("Type 'forest' to fight monsters!");
-        while(!user.nextLine().equalsIgnoreCase("forest")){
-            System.out.println("try again!");
-        }
-
-        forest(user, player1);
-
-        //------------------- NORMAL GAMEPLAY --------------------
-        System.out.println("Now that you know everything.");
-        do{
-            System.out.println("What do you want to do?");
-            System.out.println("1. guild \n" +
-                    "2. Forest \n" +
-                    "3. exit");
-        }while (choices(user, player1) && !player1.isDead());
-
-        System.out.println("Thank you for playing.");
     }
 
     public static boolean choices(Scanner user, Player player1) {
@@ -280,16 +375,6 @@ public class Main {
         }
         user.nextLine();
     }
-
-    //-----------------------------------------------------------------------
-    //------------------- PLAYER METHODS --------------------
-    public static void viewStats(Scanner user, Player player1) {
-        System.out.println("Would you like to see your overall stats? (y/n)");
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.printPlayerInfo();
-        }
-    }
-
 
     //-----------------------------------------------------------------------
     //------------------- COMBAT METHODS --------------------
