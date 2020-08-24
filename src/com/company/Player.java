@@ -177,6 +177,9 @@ public class Player extends BaseMech {
             return false;   //cannot heal anymore
         } else {
             hp += inventory.getHealPoints();
+            if(hp > maxHp){
+                hp = maxHp;
+            }
             inventory.setHealthPotions(false);
             return true;
         }

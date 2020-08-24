@@ -288,9 +288,13 @@ public class Main {
     }
 
     public static void heal(Player player1){
+        int preHeal = player1.getHp();
         if(player1.heal()){
-            System.out.println("You healed: " + player1.inventory.getHealPoints() + "points");
-            System.out.println("Current health: " + player1.getHp());
+            if(player1.getHp() == player1.getMaxHp()){
+                System.out.println("You healed: " + (player1.getMaxHp() - preHeal) + "points");
+            }
+
+            System.out.println("Current health: " + player1.getHp() + "/" + player1.getMaxHp());
             System.out.println("Health Potions left: " + player1.inventory.getHealthPotions());
         } else if(player1.inventory.getHealthPotions() == 0) {
             System.out.println("You are out of health potions.");
