@@ -29,7 +29,7 @@ public class Main {
             System.out.println("try again!");
         }
 
-        useGuild(user, player1);
+        useGuild(user, player1, "guild");
 
 
         //------------------- COMBAT TUT. --------------------
@@ -43,25 +43,72 @@ public class Main {
 
     }
 
+    //-----------------------------------------------------------------------
     //------------------- GUILD METHODS --------------------
-    public static void useGuild(Scanner user, Player player1){
-        do{
-            showGuild(player1);
-        } while (guildChoice(user, player1));
+    public static void useGuild(Scanner user, Player player1, String section){
+        switch (section) {
+            case "guild":
+                do {
+                    showGuild(player1);
+                } while (guildChoice(user, player1));
 
-        System.out.println("Exiting Guild");
+                System.out.println("Exiting Guild");
+                break;
+
+            case "weapons":
+                do {
+                    showWGuild(player1);
+                } while (wGuildChoice(user, player1));
+
+                System.out.println("Exiting Weapons Shop");
+                break;
+
+            case "healthPotions":
+                do {
+                    showHGuild(player1);
+                } while (hGuildChoice(user, player1));
+
+                System.out.println("Exiting Health Potion Shop");
+                break;
+
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
+    }
+    public static void showGuild(Player player1){
+        System.out.println("\nGuild (" + player1.inventory.getGold() + "gp)");
+        System.out.println("\t 1. weapons \n" +
+                "\t 2. healthPotions  \n" +
+                "\t 3. exit");
     }
 
-    // Currently only supporting weapons
-    public static void showGuild(Player player1){
-        System.out.println("\nWeapons (" + player1.getGold() + "gp)");
+    public static boolean guildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "weapons":
+                useGuild(user, player1, "weapons");
+                break;
+            case "healthPotions":
+                useGuild(user, player1, "healthPotions");
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid input");
+        }
+        return true;
+    }
+
+    //------------------- GUILD: WEAPONS --------------------
+    public static void showWGuild(Player player1){
+        System.out.println("\nWeapons (" + player1.inventory.getGold() + "gp)");
         System.out.println("\t 1. buy \n" +
                 "\t 2. sell \n" +
                 "\t 3. upgrade \n" +
                 "\t 4. exit");
     }
 
-    public static boolean guildChoice(Scanner user, Player player1){
+    public static boolean wGuildChoice(Scanner user, Player player1){
         switch (user.nextLine()){
             case "buy":
                 buyWeapon(user, player1);
@@ -109,7 +156,7 @@ public class Main {
     }
 
     public static void buyWeapon(Scanner user, Player player1){
-        if(!player1.weapon.getCurrentWeapon().equals("none")) {
+        if(!player1.inventory.weapon.getCurrentWeapon().equals("none")) {
             System.out.println("You can only carry one weapon at a time. Please sell your weapon first.");
         } else {
             System.out.println("Opening shop... (Hit ENTER to continue)");
@@ -117,8 +164,8 @@ public class Main {
             showWeaponInfo();
 
             System.out.println("\nWhat would you like to buy? (Case sensitive)");
-            System.out.println("Current gold: " + player1.getGold());
-            if(player1.buyWeapon(user.nextLine())){
+            System.out.println("Current gold: " + player1.inventory.getGold());
+            if(player1.inventory.buyWeapon(user.nextLine())){
                 System.out.println("Transaction complete.");
             } else {
                 System.out.println("Not enough gold");
@@ -128,13 +175,13 @@ public class Main {
     }
 
     public static void sellWeapon(Scanner user, Player player1){
-        if(player1.weapon.showSellWeapon()){
-            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
-            System.out.println("Price: " + player1.weapon.getValue() + "gp");
+        if(player1.inventory.weapon.showSellWeapon()){
+            System.out.println("Weapon: " + player1.inventory.weapon.getCurrentWeapon());
+            System.out.println("Price: " + player1.inventory.weapon.getValue() + "gp");
             System.out.println("Would you like to sell your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
-                player1.sellWeapon();
+                player1.inventory.sellWeapon();
                 System.out.println("Transaction complete");
             }
         } else {
@@ -144,14 +191,14 @@ public class Main {
 
     //UPGRADE METHODS
     public static boolean showUpgradeWeapon(Player player1) {
-        if(player1.weapon.getCurrentWeapon().equals("none")){
+        if(player1.inventory.weapon.getCurrentWeapon().equals("none")){
             System.out.println("You have no weapon.");
             return false;
         } else {
-            System.out.println("Weapon: " + player1.weapon.getCurrentWeapon());
-            System.out.println("\t Upgrade cost: " + player1.weapon.getUpCost() + "gp");
-            System.out.println("\t New Dmg Dice: " + (player1.weapon.getDmgTimes() + 1)
-                    + "d" + player1.weapon.getDmgDice());
+            System.out.println("Weapon: " + player1.inventory.weapon.getCurrentWeapon());
+            System.out.println("\t Upgrade cost: " + player1.inventory.weapon.getUpCost() + "gp");
+            System.out.println("\t New Dmg Dice: " + (player1.inventory.weapon.getDmgTimes() + 1)
+                    + "d" + player1.inventory.weapon.getDmgDice());
             return true;
         }
     }
@@ -161,7 +208,7 @@ public class Main {
             System.out.println("Would you like to upgrade your weapon? (y/n)");
 
             if(user.nextLine().equalsIgnoreCase("y")){
-                if(player1.upgradeWeapon()){
+                if(player1.inventory.upgradeWeapon()){
                     System.out.println("Upgrade Complete \n");
                 } else {
                     System.out.println("You don't have enough gold.");
@@ -170,6 +217,44 @@ public class Main {
         }
     }
 
+    //------------------- GUILD: HEALTH POTIONS --------------------
+    public static void showHGuild(Player player1){
+        System.out.println("Health Potions (" + player1.inventory.getGold() + "gp, "
+                + player1.getHp() + "/" + player1.getMaxHp() + "hp), "
+                + "Health Potions: " + player1.inventory.getHealthPotions());
+        System.out.println("\t1. buy \n" +
+                "\t2. heal \n" +
+                "\t3. exit");
+    }
+
+    public static boolean hGuildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "buy":
+                buyHealthPotion(user, player1);
+                break;
+            case "heal":
+                heal(player1);
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid option");
+        }
+        return true;
+    }
+
+    public static void buyHealthPotion(Scanner user, Player player1){
+        System.out.println("Cost: 5gp, Heals: 5hp");
+        System.out.println("How many would you like to buy?");
+        if(player1.inventory.buyHealthPotions(user.nextInt())){
+            System.out.println("Thank you for your purchase.");
+        } else {
+            System.out.println("You don't have enough money");
+        }
+        user.nextLine();
+    }
+
+    //-----------------------------------------------------------------------
     //------------------- PLAYER METHODS --------------------
     public static void viewStats(Scanner user, Player player1) {
         System.out.println("Would you like to see your overall stats? (y/n)");
@@ -178,6 +263,8 @@ public class Main {
         }
     }
 
+
+    //-----------------------------------------------------------------------
     //------------------- COMBAT METHODS --------------------
     public static void forest(Scanner user, Player player1){
         Combat combat1;
@@ -192,9 +279,8 @@ public class Main {
     }
 
     //return true if user wants to continue;
-    //Fixed: dead variable prevents enemy death message twice due to recurssion
     public static boolean combatRounds(Scanner user, Player player1, Combat combat, boolean dead) {
-        //if died get out of recurssion loop
+        //if died get out of recursion loop
         if (died(player1)){
             return false;
         }
@@ -212,7 +298,7 @@ public class Main {
         //Enemy Attacks
         if (!enemyDied(player1, combat) && !died(player1)) {
             attackPlayer(player1, combat);
-            endDefend(player1);
+            endDefend(player1, good[2]);
             return combatRounds(user, player1, combat, dead); //recursion will loop through round until quit, run, or player dies
 
         } else if(dead){
@@ -221,7 +307,6 @@ public class Main {
 
         }
 
-        System.out.println("How did you get here?");
         return wilContinue(user);
     }
 
@@ -230,29 +315,32 @@ public class Main {
         return user.nextLine().equals("y");
     }
 
-    //returning boolean {valid response, run}
+    //returning boolean {valid response, run, defended}
     public static boolean[] showCombatOption(Scanner user, Player player1, Combat combat){
         System.out.println("What will you do?");
-        System.out.println("\t1. Attack \n" +
-                "\t2. Defend \n" +
-                "\t3. Run");
+        System.out.println("\t1. attack \n" +
+                "\t2. defend \n" +
+                "\t3. heal \n" +
+                "\t4. run");
 
         switch (user.nextLine()){
             case "attack":
                 attack(player1, combat);
-                return new boolean[] {true, false};
+                return new boolean[] {true, false, false};
             case "defend":
-                defend(player1, combat);
-                return new boolean[] {true, false};
+                return new boolean[] {true, false, defend(player1, combat)};
+            case "heal":
+                heal(player1);
+                return new boolean[] {true, false, false};
             case "run":
-                return new boolean[] {true, run(player1, combat)};
+                return new boolean[] {true, run(player1, combat), false};
             default:
                 System.out.println("Invalid option");
-                return new boolean[] {false, false};
+                return new boolean[] {false, false, false};
         }
     }
 
-    //Player Function
+    //------------------- COMBAT: PLAYERS --------------------
     public static void attack(Player player1, Combat combat){
         int dmg = combat.attack(player1);
         if(dmg > 0){
@@ -267,13 +355,38 @@ public class Main {
         }
     }
 
-    public static void defend(Player player1, Combat combat1){
+    public static boolean defend(Player player1, Combat combat1){
         if(combat1.defend(player1)){
             System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
+            return true;
         } else {
             System.out.println("You cannot defend with this weapon.");
+            return false;
         }
 
+    }
+
+    public static void endDefend(Player player1, boolean defended){
+        if(defended && !player1.isDead()){
+            player1.setAC(true);
+            System.out.println("You have lowered you shield. You AC returns to " + player1.getAc());
+        }
+    }
+
+    public static void heal(Player player1){
+        int preHeal = player1.getHp();
+        if(player1.heal()){
+            if(player1.getHp() == player1.getMaxHp()){
+                System.out.println("You healed: " + (player1.getMaxHp() - preHeal) + "points");
+            }
+
+            System.out.println("Current health: " + player1.getHp() + "/" + player1.getMaxHp());
+            System.out.println("Health Potions left: " + player1.inventory.getHealthPotions());
+        } else if(player1.inventory.getHealthPotions() == 0) {
+            System.out.println("You are out of health potions.");
+        } else {
+            System.out.println("You are at full health.");
+        }
     }
 
     public static boolean run(Player player1, Combat combat){
@@ -286,11 +399,6 @@ public class Main {
 
     }
 
-    public static void endDefend(Player player1){
-        player1.setAC(true);
-        System.out.println("You have lowered you shield. You AC returns to " + player1.getAc());
-    }
-
     public static boolean died(Player player1){
         if(player1.isDead()){
             System.out.println("You died.");
@@ -299,7 +407,7 @@ public class Main {
         return false;
     }
 
-    //Enemy functions
+    //------------------- COMBAT: ENEMY --------------------
     public static void attackPlayer(Player player1, Combat combat){
         int dmg = combat.attackPlayer(player1);
         if(dmg > 0){

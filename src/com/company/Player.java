@@ -13,11 +13,12 @@ public class Player extends BaseMech {
     private int ac;
     private int level;
     private int exp;
-    private int gold;
+    //private int gold;
 
     //store character stat values
     private HashMap<String, Integer> stats = new HashMap<>();
-    public Weapon weapon = new Weapon();
+    public Inventory inventory;
+    //public Weapon weapon = new Weapon();
 
     //exp need to level to next level
     int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
@@ -29,13 +30,13 @@ public class Player extends BaseMech {
         name = newName;
         race = newRace;
         level = newLevel;
-        gold = 15;  //TODO default value should be 2gp for game
         exp = 0;
 
         createStats();
-        setHp(level);
+        setMaxHp(level);
         maxAc = 10 + getStatMod("dex");
         ac = maxAc;
+        inventory = new Inventory();
     }
 
     //randomly roll stats based on 3d6
@@ -61,7 +62,7 @@ public class Player extends BaseMech {
 
     public int getExp(){ return exp; }
 
-    public int getGold(){ return gold; }
+//    public int getGold(){ return gold; }
 
     //get stat modifier based on stat (only 1-20)
     public int getStatMod(String stat){
@@ -106,7 +107,7 @@ public class Player extends BaseMech {
     //------------------- MODIFIERS --------------------
     //create hp: current only calculate wizards
     //TODO add hit dice variable to make more generic?
-    public void setHp(int level){
+    public void setMaxHp(int level){
         if(level == 1){
             maxHp = 6 + getStatMod("con");
         } else {
@@ -115,13 +116,13 @@ public class Player extends BaseMech {
         hp = maxHp;
     }
 
-    public void setGold(boolean buy, int cost){
-        if(buy){
-            gold -= cost;
-        } else {
-            gold += cost;
-        }
-    }
+//    public void setGold(boolean buy, int cost){
+//        if(buy){
+//            gold -= cost;
+//        } else {
+//            gold += cost;
+//        }
+//    }
 
     public void setExp(int newExp){ exp += newExp; }
 
@@ -135,24 +136,24 @@ public class Player extends BaseMech {
 
     //------------------- WEAPON METHODS --------------------
     //subtract gold when upgrading weapon, return true if complete
-    public boolean upgradeWeapon() {
-        int cost = weapon.upgrade(gold);
-        if(cost > 0){
-            setGold(true, cost);
-            return true;
-        }
-        return false;
-    }
-
-    public boolean buyWeapon(String newWeapon) {
-        if(weapon.buyWpn(gold, newWeapon)) {
-            setGold(true, weapon.getValue());
-            return true;
-        }
-        return false;
-    }
-
-    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
+//    public boolean upgradeWeapon() {
+//        int cost = weapon.upgrade(gold);
+//        if(cost > 0){
+//            setGold(true, cost);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean buyWeapon(String newWeapon) {
+//        if(weapon.buyWpn(gold, newWeapon)) {
+//            setGold(true, weapon.getValue());
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
 
     //------------------- GENERAL METHODS --------------------
     //TODO print out level up message if return true.
@@ -161,7 +162,7 @@ public class Player extends BaseMech {
         if(exp >= lvUp[level]){
             exp = 0;
             level++;
-            setHp(level);
+            setMaxHp(level);
             return true;
         }
         return false;
@@ -171,11 +172,15 @@ public class Player extends BaseMech {
         hp -= dmg;
     }
 
-    public boolean heal(int heal){
-        if(hp == maxHp){
+    public boolean heal(){
+        if(hp == maxHp || inventory.getHealthPotions() == 0){
             return false;   //cannot heal anymore
         } else {
-            hp += heal;
+            hp += inventory.getHealPoints();
+            if(hp > maxHp){
+                hp = maxHp;
+            }
+            inventory.setHealthPotions(false);
             return true;
         }
     }

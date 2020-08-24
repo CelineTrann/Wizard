@@ -1,13 +1,11 @@
 package com.company;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class Combat extends BaseMech {
     //------------------- ATTRIBUTES --------------------
     String[] creatures = {"none", "giantWeasel", "giantFrog", "hobgoblin", "brownBear"};
     Enemy enemy;
-    boolean exit;
 
     //------------------- CONSTRUCTORS --------------------
     public Combat(Player player1){
@@ -15,7 +13,7 @@ public class Combat extends BaseMech {
         enemy = new Enemy(creatures[enemyIndex]);
     }
 
-
+    //return which enemy can be access in enemy array
     private int getEnemyIndex(int level){
         Random randomEnemy = new Random();
         return randomEnemy.nextInt(level * 2) + 1;
@@ -24,8 +22,8 @@ public class Combat extends BaseMech {
     //------------------- PLAYER ACTION --------------------
     //return true if enemy is hit
     public int attack(Player player1){
-        if(player1.weapon.attackRoll(enemy)) {
-            int dmg = player1.weapon.dmgRoll();
+        if(player1.inventory.weapon.attackRoll(enemy)) {
+            int dmg = player1.inventory.weapon.dmgRoll();
             enemy.setHp(dmg);
             return dmg;
         }
@@ -33,7 +31,7 @@ public class Combat extends BaseMech {
     }
 
     public boolean defend(Player player1){
-        if(player1.weapon.getCanShield()){
+        if(player1.inventory.weapon.getCanShield()){
             player1.setAC(false);
             return true;
         }
@@ -42,7 +40,7 @@ public class Combat extends BaseMech {
 
     //return true if successfully escape
     public boolean run(Player player1){
-        return rollDice(1, 20) + player1.getStatMod("dex") > 15;
+        return rollDice(1, 20) + player1.getStatMod("dex") > 10;
     }
 
     //------------------- ENEMY ACTION --------------------

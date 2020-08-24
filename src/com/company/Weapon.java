@@ -1,12 +1,11 @@
 package com.company;
 
-import java.util.HashMap;
-
 public class Weapon extends BaseMech {
     private String currentWeapon;
     private int dmgDice;
     private int dmgTimes;
     private int upCost;
+    private int baseVal;
     private int value;
     private boolean canShield;
 
@@ -28,7 +27,7 @@ public class Weapon extends BaseMech {
         dmgDice = 0;
         dmgTimes = 1;
         canShield = true;
-        value = 0;
+        baseVal = 0;
         upCost = calcUpCost();
     }
 
@@ -58,10 +57,11 @@ public class Weapon extends BaseMech {
             return false;
         } else {
             currentWeapon = weaponNames[weaponIndex];
-            value = weaponInfo[weaponIndex][0];
+            baseVal = weaponInfo[weaponIndex][0];
+            value = baseVal;
             dmgTimes = weaponInfo[weaponIndex][1];
             dmgDice = weaponInfo[weaponIndex][2];
-            canShield = weaponInfo[weaponIndex][3] == 0;
+            canShield = weaponInfo[weaponIndex][3] == 1;
             upCost = calcUpCost();
             return true;
         }
@@ -73,7 +73,7 @@ public class Weapon extends BaseMech {
     }
 
     public int calcUpCost(){
-        return value * dmgTimes;
+        return baseVal * dmgTimes;
     }
 
 
