@@ -41,6 +41,31 @@ public class Main {
 
         forest(user, player1);
 
+        //------------------- NORMAL GAMEPLAY --------------------
+        System.out.println("Now that you never thing. Choose what you want to do.");
+        do{
+            System.out.println("1. guild \n" +
+                    "2. Forest \n" +
+                    "3. exit");
+        }while (choices(user, player1));
+
+        System.out.println("Goodbye.");
+    }
+
+    public static boolean choices(Scanner user, Player player1) {
+        switch (user.nextLine()){
+            case "guild":
+                useGuild(user, player1, "guild");
+                break;
+            case "forest":
+                forest(user, player1);
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid option");
+        }
+        return true;
     }
 
     //-----------------------------------------------------------------------
@@ -76,6 +101,7 @@ public class Main {
                 break;
         }
     }
+
     public static void showGuild(Player player1){
         System.out.println("\nGuild (" + player1.inventory.getGold() + "gp)");
         System.out.println("\t 1. weapons \n" +
@@ -310,8 +336,9 @@ public class Main {
         return wilContinue(user);
     }
 
+    //return true to stay in forest
     public static boolean wilContinue(Scanner user){
-        System.out.println("Would you like to continue? (y/n)");
+        System.out.println("Would you like to continue fighting? (y/n)");
         return user.nextLine().equals("y");
     }
 
