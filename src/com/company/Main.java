@@ -48,9 +48,9 @@ public class Main {
             System.out.println("1. guild \n" +
                     "2. Forest \n" +
                     "3. exit");
-        }while (choices(user, player1));
+        }while (choices(user, player1) && !player1.isDead());
 
-        System.out.println("Goodbye.");
+        System.out.println("Thank you for playing.");
     }
 
     public static boolean choices(Scanner user, Player player1) {
