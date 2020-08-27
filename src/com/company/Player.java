@@ -13,12 +13,10 @@ public class Player extends BaseMech {
     private int ac;
     private int level;
     private int exp;
-    //private int gold;
 
     //store character stat values
     private HashMap<String, Integer> stats = new HashMap<>();
     public Inventory inventory;
-    //public Weapon weapon = new Weapon();
 
     //exp need to level to next level
     int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
@@ -61,8 +59,6 @@ public class Player extends BaseMech {
     public int getMaxHp(){ return maxHp; }
 
     public int getExp(){ return exp; }
-
-//    public int getGold(){ return gold; }
 
     //get stat modifier based on stat (only 1-20)
     public int getStatMod(String stat){
@@ -116,13 +112,6 @@ public class Player extends BaseMech {
         hp = maxHp;
     }
 
-//    public void setGold(boolean buy, int cost){
-//        if(buy){
-//            gold -= cost;
-//        } else {
-//            gold += cost;
-//        }
-//    }
 
     public void setExp(int newExp){ exp += newExp; }
 
@@ -133,27 +122,6 @@ public class Player extends BaseMech {
             ac += 2;
         }
     }
-
-    //------------------- WEAPON METHODS --------------------
-    //subtract gold when upgrading weapon, return true if complete
-//    public boolean upgradeWeapon() {
-//        int cost = weapon.upgrade(gold);
-//        if(cost > 0){
-//            setGold(true, cost);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean buyWeapon(String newWeapon) {
-//        if(weapon.buyWpn(gold, newWeapon)) {
-//            setGold(true, weapon.getValue());
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public void sellWeapon() { setGold(false, weapon.sellWeapon()); }
 
     //------------------- GENERAL METHODS --------------------
     //TODO print out level up message if return true.
