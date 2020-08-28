@@ -15,8 +15,9 @@ public class Player extends BaseMech {
     private int exp;
 
     //store character stat values
-    private HashMap<String, Integer> stats = new HashMap<>();
+    private HashMap<String, Integer> stats;
     public Inventory inventory;
+    public Spell[] spells;
 
     //exp need to level to next level
     int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
@@ -34,7 +35,10 @@ public class Player extends BaseMech {
         setMaxHp(level);
         maxAc = 10 + getStatMod("dex");
         ac = maxAc;
+
+        stats = new HashMap<>();
         inventory = new Inventory();
+        spells = new Spell[4];
     }
 
     //randomly roll stats based on 3d6
