@@ -18,6 +18,7 @@ public class Player extends BaseMech {
     private HashMap<String, Integer> stats;
     public Inventory inventory;
     public Spell[] spells;
+    public int[] spellSlots = new int[10];
 
     //exp need to level to next level
     int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
@@ -39,6 +40,8 @@ public class Player extends BaseMech {
         stats = new HashMap<>();
         inventory = new Inventory();
         spells = new Spell[4];
+        spellSlots[0] = -1;
+        spellSlots[1] = 2;
     }
 
     //randomly roll stats based on 3d6

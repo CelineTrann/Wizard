@@ -7,8 +7,6 @@ public class Spell extends BaseMech {
     private int dmgTimes;
     private int bonus;
     private boolean heal;
-    private int uses;
-    private int curUses;
 
     private String[] spells = {"falseLife", "fireBolt", "magicMissile", "scorchingRay"};
 
@@ -30,7 +28,6 @@ public class Spell extends BaseMech {
         dmgDice = spellInfo[spellIndex][2];
         bonus = spellInfo[spellIndex][3];
         heal = spellInfo[spellIndex][4] == 1;
-        uses = spellInfo[spellIndex][5];
     }
 
     //--------------------- ACCESSOR ------------------------
@@ -42,23 +39,11 @@ public class Spell extends BaseMech {
         return rollDice(dmgTimes, dmgDice) + bonus;
     }
 
-    public int getUses(){ return uses; }
-
     //--------------------- MODIFIERS ------------------------
-    public void setUses(boolean reset){
-        if(reset){
-            int spellIndex = findIndex(spells, name);
-            uses = spellInfo[spellIndex][5];
-        } else {
-            uses--;
-        }
-    }
 
     public void setDmgTimes(){ dmgTimes++; }
 
     public void upgradeSpell(){
-        int spellIndex = findIndex(spells, name);
-        uses = spellInfo[spellIndex][5] + 1;
         dmgTimes++;
     }
 
