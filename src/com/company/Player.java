@@ -127,6 +127,10 @@ public class Player extends BaseMech {
         }
     }
 
+    public void setSpells(String spellName, int slot){
+        spells[slot] = new Spell(spellName);
+    }
+
     //------------------- GENERAL METHODS --------------------
     //TODO print out level up message if return true.
     //gain gp when level up?
