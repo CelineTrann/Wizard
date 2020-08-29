@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Spell extends BaseMech {
     private String name;
     private int level;
@@ -8,6 +10,7 @@ public class Spell extends BaseMech {
     private int bonus;
     private boolean heal;
 
+    //Could put spellInfo into Hashmap<Strings, int[]> but need to create
     private String[] spells = {"falseLife", "fireBolt", "magicMissile", "scorchingRay"};
 
     //array shows {level, dmgTimes, dmgDice, bonus, heal}
@@ -31,12 +34,27 @@ public class Spell extends BaseMech {
     }
 
     //--------------------- ACCESSOR ------------------------
+    public String getName(){ return name; }
+
     public int getLevel() { return level; }
 
     public boolean getHeal(){ return heal; }
 
     public int getDamageDone(){
         return rollDice(dmgTimes, dmgDice) + bonus;
+    }
+
+    public ArrayList<String> getAvailableSpells(int level){
+        ArrayList<String> availableSpells = new ArrayList<>();
+        for(int i = 0; i < spells.length && spellInfo[i][0] <= level; i++){
+            availableSpells.add(spells[i]);
+        }
+        return availableSpells;
+    }
+
+    public int[] getSpellInfo(String name){
+        int spellIndex = findIndex(spells, name);
+        return spellInfo[spellIndex];
     }
 
     //--------------------- MODIFIERS ------------------------

@@ -71,6 +71,33 @@ public class Main {
 
     //-----------------------------------------------------------------------
     //------------------- GUILD METHODS --------------------
+    public static void showGuild(Player player1){
+        System.out.println("\nGuild (" + player1.inventory.getGold() + "gp)");
+        System.out.println("\t 1. weapons \n" +
+                "\t 2. healthPotions  \n" +
+                "\t 3. spells \n" +
+                "\t 4. exit");
+    }
+
+    public static boolean guildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "weapons":
+                useGuild(user, player1, "weapons");
+                break;
+            case "healthPotions":
+                useGuild(user, player1, "healthPotions");
+                break;
+            case "spells":
+                useGuild(user, player1, "spells");
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid input");
+        }
+        return true;
+    }
+
     public static void useGuild(Scanner user, Player player1, String section){
         switch (section) {
             case "guild":
@@ -97,33 +124,18 @@ public class Main {
                 System.out.println("Exiting Health Potion Shop");
                 break;
 
+            case "spells":
+                do {
+                    showSGuild();
+                }while (sGuildChoice(user, player1));
+
+                System.out.println("Exiting Spell Shop");
+                break;
+
             default:
                 System.out.println("Invalid option");
                 break;
         }
-    }
-
-    public static void showGuild(Player player1){
-        System.out.println("\nGuild (" + player1.inventory.getGold() + "gp)");
-        System.out.println("\t 1. weapons \n" +
-                "\t 2. healthPotions  \n" +
-                "\t 3. exit");
-    }
-
-    public static boolean guildChoice(Scanner user, Player player1){
-        switch (user.nextLine()){
-            case "weapons":
-                useGuild(user, player1, "weapons");
-                break;
-            case "healthPotions":
-                useGuild(user, player1, "healthPotions");
-                break;
-            case "exit":
-                return false;
-            default:
-                System.out.println("Invalid input");
-        }
-        return true;
     }
 
     //------------------- GUILD: WEAPONS --------------------
@@ -279,6 +291,66 @@ public class Main {
             System.out.println("You don't have enough money");
         }
         user.nextLine();
+    }
+
+    //------------------- GUILD: SPELLS --------------------
+    public static void showSGuild(){
+        System.out.println("\nSpells");
+        System.out.println("\t 1. acquire \n" +
+                "\t 2. upgrade \n" +
+                "\t 3. exit");
+    }
+
+    public static boolean sGuildChoice(Scanner user, Player player1){
+        switch (user.nextLine()){
+            case "acquire":
+                showSpells(player1);
+                buySpells(user, player1);
+                break;
+            case "exit":
+                return false;
+            default:
+                System.out.println("Invalid input");
+        }
+        return true;
+    }
+
+    public static void showSpells(Player player1){
+        String[] availableSpells = player1.spells[0].getAvailableSpells(player1.getLevel()).toArray(new String[0]);
+
+        for(String spells: availableSpells){
+            System.out.println(spells);
+            int[] spellInfo = player1.spells[0].getSpellInfo(spells);
+            System.out.println("\tLevel: " + spellInfo[0]
+                + "\n\tDice Roll: " + spellInfo[1] + "d" + spellInfo[2]
+                + "\n\tBonus: " + spellInfo[3]);
+
+            if(spellInfo[4] == 1){
+                System.out.println("\tType: Heals \n");
+            } else{
+                System.out.println("\tType: Attack \n");
+            }
+        }
+    }
+
+    public static void buySpells(Scanner user, Player player1){
+        System.out.println("What spell would you like to acquire");
+        String spellName = user.nextLine();
+
+        System.out.println("What spell would you like to replace?");
+        String[] curSpells = player1.showCurSpells();
+        for(String name : curSpells){
+            System.out.println("* " + name);
+        }
+        System.out.println("exit");
+
+        int index = player1.findIndex(curSpells, user.nextLine());
+        if(index == -1){
+            System.out.println("Invalid spell.");
+        } else {
+            player1.setSpells(spellName, index);
+            System.out.println("Spell acquired.");
+        }
     }
 
     //-----------------------------------------------------------------------

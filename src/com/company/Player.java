@@ -21,7 +21,7 @@ public class Player extends BaseMech {
     public int[] spellSlots = new int[10];
 
     //exp need to level to next level
-    int[] lvUp = {0, 300, 900, 2700, 6500, 14000};
+    int[] lvUp = {0, 3, 900, 2700, 6500, 14000};
 
 
     //------------------- CONSTRUCTOR --------------------
@@ -32,14 +32,15 @@ public class Player extends BaseMech {
         level = newLevel;
         exp = 0;
 
+        stats = new HashMap<>();
         createStats();
         setMaxHp(level);
         maxAc = 10 + getStatMod("dex");
         ac = maxAc;
 
-        stats = new HashMap<>();
         inventory = new Inventory();
         spells = new Spell[4];
+        spells[0] = new Spell("falseLife");
         spellSlots[0] = -1;
         spellSlots[1] = 2;
     }
@@ -119,7 +120,6 @@ public class Player extends BaseMech {
         hp = maxHp;
     }
 
-
     public void setExp(int newExp){ exp += newExp; }
 
     public void setAC(boolean reset){
@@ -130,8 +130,22 @@ public class Player extends BaseMech {
         }
     }
 
+    //------------------- SPELLS METHODS --------------------
     public void setSpells(String spellName, int slot){
         spells[slot] = new Spell(spellName);
+    }
+
+    public String[] showCurSpells(){
+        String[] spellNames = new String[4];
+        for(int i = 0; i < spells.length; i++){
+            if (spells[i] == null){
+                spellNames[i] = "spell slot " + (i + 1);
+            } else {
+                spellNames[i] = spells[i].getName();
+            }
+        }
+        return spellNames;
+
     }
 
     //------------------- GENERAL METHODS --------------------
