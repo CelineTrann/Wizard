@@ -295,10 +295,14 @@ public class Main {
     public static void buyHealthPotion(Scanner user, Player player1){
         System.out.println("Cost: 5gp, Heals: 5hp");
         System.out.println("How many would you like to buy?");
-        if(player1.inventory.buyHealthPotions(user.nextInt())){
-            System.out.println("Thank you for your purchase.");
-        } else {
-            System.out.println("You don't have enough money");
+        try {
+            if(player1.inventory.buyHealthPotions(user.nextInt())){
+                System.out.println("Thank you for your purchase.");
+            } else {
+                System.out.println("You don't have enough money");
+            }
+        } catch (Exception e) {
+            System.out.println("A numerically value is required. \n");
         }
         user.nextLine();
     }
