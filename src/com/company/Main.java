@@ -19,6 +19,7 @@ public class Main {
 
         viewStats(user, player1);
 
+        /*
         //--------------------- SHOPPING TUT. ------------------------
         System.out.println("Let me teach you about the store. It can be found at the Adventure guild. \n" +
                 "There you can buy, sell and upgrade weapons. Remember you can only carry one (1) weapon at a time. \n" +
@@ -41,8 +42,8 @@ public class Main {
 
         forest(user, player1);
 
+         */
         //------------------- NORMAL GAMEPLAY --------------------
-        System.out.println("Now that you know everything.");
         do{
             System.out.println("What do you want to do?");
             System.out.println("1. guild \n" +
@@ -51,6 +52,15 @@ public class Main {
         }while (choices(user, player1) && !player1.isDead());
 
         System.out.println("Thank you for playing.");
+    }
+
+    //-----------------------------------------------------------------------
+    //------------------- MAIN METHOD --------------------
+    public static void viewStats(Scanner user, Player player1) {
+        System.out.println("Would you like to see your overall stats? (y/n)");
+        if(user.nextLine().equalsIgnoreCase("y")){
+            player1.printPlayerInfo();
+        }
     }
 
     public static boolean choices(Scanner user, Player player1) {
@@ -354,16 +364,6 @@ public class Main {
     }
 
     //-----------------------------------------------------------------------
-    //------------------- PLAYER METHODS --------------------
-    public static void viewStats(Scanner user, Player player1) {
-        System.out.println("Would you like to see your overall stats? (y/n)");
-        if(user.nextLine().equalsIgnoreCase("y")){
-            player1.printPlayerInfo();
-        }
-    }
-
-
-    //-----------------------------------------------------------------------
     //------------------- COMBAT METHODS --------------------
     public static void forest(Scanner user, Player player1){
         Combat combat1;
@@ -425,7 +425,7 @@ public class Main {
 
         switch (user.nextLine()){
             case "attack":
-                attack(player1, combat);
+                attack(combat);
                 return new boolean[] {true, false, false};
             case "defend":
                 return new boolean[] {true, false, defend(player1, combat)};
@@ -433,7 +433,7 @@ public class Main {
                 heal(player1);
                 return new boolean[] {true, false, false};
             case "run":
-                return new boolean[] {true, run(player1, combat), false};
+                return new boolean[] {true, run(combat), false};
             default:
                 System.out.println("Invalid option");
                 return new boolean[] {false, false, false};
@@ -441,8 +441,8 @@ public class Main {
     }
 
     //------------------- COMBAT: PLAYERS --------------------
-    public static void attack(Player player1, Combat combat){
-        int dmg = combat.attack(player1);
+    public static void attack(Combat combat){
+        int dmg = combat.attack();
         if(dmg > 0){
             System.out.println("You did " + dmg + "dmg");
             if (combat.enemy.getHp() <= 0){
@@ -459,7 +459,7 @@ public class Main {
     }
 
     public static boolean defend(Player player1, Combat combat1){
-        if(combat1.defend(player1)){
+        if(combat1.defend()){
             System.out.println("Your AC increased to " + player1.getAc() + " for this round.");
             return true;
         } else {
@@ -492,8 +492,8 @@ public class Main {
         }
     }
 
-    public static boolean run(Player player1, Combat combat){
-        if(combat.run(player1)){
+    public static boolean run(Combat combat){
+        if(combat.run()){
             System.out.println("You escaped!");
             return true;
         }
@@ -512,7 +512,7 @@ public class Main {
 
     //------------------- COMBAT: ENEMY --------------------
     public static void attackPlayer(Player player1, Combat combat){
-        int dmg = combat.attackPlayer(player1);
+        int dmg = combat.attackPlayer();
         if(dmg > 0){
             System.out.println("You took " + dmg + "dmg.");
             System.out.println("Current hp: " + player1.getHp() + "/" + player1.getMaxHp());
@@ -522,7 +522,7 @@ public class Main {
     }
 
     public static boolean enemyDied(Player player, Combat combat){
-        boolean[] deathGain = combat.died(player);
+        boolean[] deathGain = combat.died();
         if(deathGain[0]){
             System.out.println("You defeated " + combat.enemy.getName());
             System.out.println("You gained "+ combat.enemy.getExp() + "exp");

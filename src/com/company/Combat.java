@@ -6,9 +6,11 @@ public class Combat extends BaseMech {
     //------------------- ATTRIBUTES --------------------
     String[] creatures = {"none", "giantWeasel", "giantFrog", "hobgoblin", "brownBear"};
     Enemy enemy;
+    Player player1;
 
     //------------------- CONSTRUCTORS --------------------
-    public Combat(Player player1){
+    public Combat(Player newPlayer){
+        player1 = newPlayer;
         int enemyIndex = getEnemyIndex(player1.getLevel());
         enemy = new Enemy(creatures[enemyIndex]);
     }
@@ -21,7 +23,7 @@ public class Combat extends BaseMech {
 
     //------------------- PLAYER ACTION --------------------
     //return true if enemy is hit
-    public int attack(Player player1){
+    public int attack(){
         if (player1.inventory.getWeaponName().equals("none")){
             return -1;
 
@@ -35,7 +37,7 @@ public class Combat extends BaseMech {
         }
     }
 
-    public boolean defend(Player player1){
+    public boolean defend(){
         if(player1.inventory.weapon.getCanShield()){
             player1.setAC(false);
             return true;
@@ -44,12 +46,16 @@ public class Combat extends BaseMech {
     }
 
     //return true if successfully escape
-    public boolean run(Player player1){
+    public boolean run(){
         return rollDice(1, 20) + player1.getStatMod("dex") > 10;
     }
 
+    public void spellAttack(){
+
+    }
+
     //------------------- ENEMY ACTION --------------------
-    public int attackPlayer(Player player1){
+    public int attackPlayer(){
         if(enemy.attackRoll(player1)){
             int dmg = enemy.dmgRoll();
             player1.takeDmg(dmg);
@@ -61,7 +67,7 @@ public class Combat extends BaseMech {
     }
 
     //shows boolean {enemyDied, levelUp}
-    public boolean[] died(Player player1){
+    public boolean[] died(){
         if(enemy.isDead()){
             player1.setExp(enemy.getExp());
             return new boolean[] {true, player1.levelUp()};

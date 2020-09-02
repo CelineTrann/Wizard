@@ -44,6 +44,7 @@ public class Spell extends BaseMech {
         return rollDice(dmgTimes, dmgDice) + bonus;
     }
 
+    //show spells available to buy in Guild
     public ArrayList<String> getAvailableSpells(int level){
         ArrayList<String> availableSpells = new ArrayList<>();
         for(int i = 0; i < spells.length && spellInfo[i][0] <= level; i++){
