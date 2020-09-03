@@ -165,8 +165,12 @@ public class Player extends BaseMech {
     // if return -1, spell is not found
     public int getSpellIndex(String spellName){
         for(int i = 0; i < spells.length; i++){
-            if(spells[i].getName().equals(spellName)){
-                return i;
+            try{
+                if(spells[i].getName().equals(spellName)){
+                    return i;
+                }
+            } catch (Exception e){
+                System.out.println("A null value is present");
             }
         }
         return -1;
