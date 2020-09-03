@@ -485,8 +485,10 @@ public class Main {
         } else if (dmg == 0){
             System.out.println("You missed.");
 
-        } else {
+        } else if (dmg == -1) {
             System.out.println("You don't have this spell.");
+        } else {
+            System.out.println("You are out of this level spell slots");
         }
     }
 

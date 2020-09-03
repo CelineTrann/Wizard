@@ -52,11 +52,16 @@ public class Combat extends BaseMech {
 
     public int spellAttack(String spell){
         int spellIndex = player1.getSpellIndex(spell);
-        if(spellIndex == -1){
+        Spell curSpell = player1.spells[spellIndex];
+
+        if(spellIndex == -1) {
             return -1;
 
+        } else if (!player1.setSpellSlots(curSpell.getLevel(), false)){
+            return -2;
+
         } else if(player1.getSpellAtk(enemy)){
-            int dmg = player1.spells[spellIndex].getDamageDone();
+            int dmg = curSpell.getDamageDone();
             enemy.setHp(dmg);
             return dmg;
 

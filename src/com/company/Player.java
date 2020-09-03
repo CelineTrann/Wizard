@@ -108,6 +108,10 @@ public class Player extends BaseMech {
         }
     }
 
+    public int getSpellSlot(int level){
+        return spellSlots[level];
+    }
+
     //------------------- MODIFIERS --------------------
     //create hp: current only calculate wizards
     //TODO add hit dice variable to make more generic?
@@ -128,6 +132,17 @@ public class Player extends BaseMech {
         } else {
             ac += 2;
         }
+    }
+
+    public boolean setSpellSlots(int level, boolean reset){
+        if (reset){
+            spellSlots[1] = 2;
+        } else if (spellSlots[level] > 0){
+            spellSlots[level]--;
+        } else {
+            return false;
+        }
+        return true;
     }
 
     //------------------- SPELLS METHODS --------------------
