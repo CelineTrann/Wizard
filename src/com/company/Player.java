@@ -145,7 +145,21 @@ public class Player extends BaseMech {
             }
         }
         return spellNames;
+    }
 
+    // if return -1, spell is not found
+    public int getSpellIndex(String spellName){
+        for(int i = 0; i < spells.length; i++){
+            if(spells[i].getName().equals(spellName)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    //for wizard
+    public boolean getSpellAtk(Enemy enemy){
+        return enemy.getAc() < rollDice(1, 20) + getStatMod("int");
     }
 
     //------------------- GENERAL METHODS --------------------

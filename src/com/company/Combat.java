@@ -50,8 +50,19 @@ public class Combat extends BaseMech {
         return rollDice(1, 20) + player1.getStatMod("dex") > 10;
     }
 
-    public void spellAttack(){
+    public int spellAttack(String spell){
+        int spellIndex = player1.getSpellIndex(spell);
+        if(spellIndex == -1){
+            return -1;
 
+        } else if(player1.getSpellAtk(enemy)){
+            int dmg = player1.spells[spellIndex].getDamageDone();
+            enemy.setHp(dmg);
+            return dmg;
+
+        } else {
+            return 0;
+        }
     }
 
     //------------------- ENEMY ACTION --------------------

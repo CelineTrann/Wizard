@@ -423,13 +423,17 @@ public class Main {
     public static boolean[] showCombatOption(Scanner user, Player player1, Combat combat){
         System.out.println("What will you do?");
         System.out.println("\t1. attack \n" +
-                "\t2. defend \n" +
-                "\t3. heal \n" +
-                "\t4. run");
+                "\t2. spells \n" +
+                "\t3. defend \n" +
+                "\t4. heal \n" +
+                "\t5. run");
 
         switch (user.nextLine()){
             case "attack":
                 attack(combat);
+                return new boolean[] {true, false, false};
+            case "spells":
+                useSpell(user, player1, combat);
                 return new boolean[] {true, false, false};
             case "defend":
                 return new boolean[] {true, false, defend(player1, combat)};
@@ -459,6 +463,30 @@ public class Main {
 
         } else {
             System.out.println("You don't have a weapon to attack with.");
+        }
+    }
+
+    public static void useSpell(Scanner user, Player player1, Combat combat){
+        System.out.println("What spell would you like to use");
+        String[] curSpells = player1.showCurSpells();
+        for(String name : curSpells){
+            System.out.println("* " + name);
+        }
+
+        int dmg = combat.spellAttack(user.nextLine());
+        if(dmg > 0){
+            System.out.println("You did " + dmg + "dmg");
+            if (combat.enemy.getHp() <= 0){
+                System.out.println("Enemy health: 0");
+            } else {
+                System.out.println("Enemy health: " + combat.enemy.getHp());
+            }
+
+        } else if (dmg == 0){
+            System.out.println("You missed.");
+
+        } else {
+            System.out.println("You don't have this spell.");
         }
     }
 
